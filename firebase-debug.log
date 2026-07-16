@@ -1,0 +1,709 @@
+[debug] [2026-07-15T20:22:31.949Z] ----------------------------------------------------------------------
+[debug] [2026-07-15T20:22:31.951Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Muddasir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-07-15T20:22:31.952Z] CLI Version:   15.23.0
+[debug] [2026-07-15T20:22:31.952Z] Platform:      win32
+[debug] [2026-07-15T20:22:31.952Z] Node Version:  v22.22.3
+[debug] [2026-07-15T20:22:31.952Z] Detected Agent: antigravity
+[debug] [2026-07-15T20:22:31.952Z] Time:          Thu Jul 16 2026 01:22:31 GMT+0500 (Pakistan Standard Time)
+[debug] [2026-07-15T20:22:31.952Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-15T20:22:34.945Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-15T20:22:34.946Z] > authorizing via signed-in user (starlightentertainment.pk@gmail.com)
+[debug] [2026-07-15T20:22:34.946Z] [iam] checking project actorsstudio2026 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-15T20:22:34.973Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:34.973Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:34.976Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions [none]
+[debug] [2026-07-15T20:22:34.977Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions  x-goog-user-project=actorsstudio2026
+[debug] [2026-07-15T20:22:34.977Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:22:36.404Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions 200
+[debug] [2026-07-15T20:22:36.405Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:22:36.405Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:36.405Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:36.405Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 [none]
+[debug] [2026-07-15T20:22:36.924Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 200
+[debug] [2026-07-15T20:22:36.924Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 {"projectId":"actorsstudio2026","projectNumber":"1036418977391","displayName":"ActorsStudio","name":"projects/actorsstudio2026","resources":{"hostingSite":"actorsstudio2026"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_8c90c28e-26fa-4b85-9ae7-01ef437f9d7d"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-07-15T20:22:51.566Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:51.566Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:22:51.566Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:22:53.706Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:22:53.706Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.10 (Turbopack)
+
+[info] - Environments: .env.local
+
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 8.5s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 11.1s ...
+
+[info]   Collecting page data using 11 workers ...
+
+[info]   Generating static pages using 11 workers (0/34) ...
+
+[info]   Generating static pages using 11 workers (8/34) 
+
+[info]   Generating static pages using 11 workers (16/34) 
+
+[info]   Generating static pages using 11 workers (25/34) 
+
+[info] ✓ Generating static pages using 11 workers (34/34) in 1146ms
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/casting
+├ ○ /admin/categories
+├ ○ /admin/producers
+├ ○ /agent/dashboard
+├ ƒ /api/talent/[slug]/comp-card
+├ ƒ /auth/callback
+├ ○ /auth/forgot-password
+├ ○ /auth/login
+├ ○ /auth/register
+├ ○ /auth/reset-password
+├ ƒ /casting
+├ ƒ /casting/[id]
+├ ○ /casting/dashboard
+├ ○ /logout
+├ ƒ /producer/[id]
+├ ○ /producer/applications
+├ ○ /producer/casting
+├ ƒ /producer/casting/[id]/applications
+├ ƒ /producer/casting/[id]/edit
+├ ƒ /producer/casting/create
+├ ○ /producer/dashboard
+├ ○ /producer/onboarding
+├ ○ /producer/profile
+├ ○ /producer/search
+├ ƒ /producer/talent-search
+├ ƒ /talent
+├ ● /talent/[slug]
+├ ○ /talent/applications
+├ ○ /talent/casting
+├ ○ /talent/dashboard
+├ ○ /talent/media
+├ ○ /talent/onboarding
+├ ○ /talent/profile
+├ ○ /talent/settings
+└ ○ /unauthorized
+
+
+ƒ Proxy (Middleware)
+
+[info] 
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • middleware
+[info]  • use of fallback /talent/[slug]
+[info]  • non-static component /(dashboard)/producer/casting/[id]/applications/page
+[info]  • non-static component /(dashboard)/producer/casting/[id]/edit/page
+[info]  • non-static component /(dashboard)/producer/casting/create/page
+[debug] [2026-07-15T20:23:22.618Z]  • non-static component /(dashboard)/producer/talent-search/page
+[debug] [2026-07-15T20:23:22.618Z]  • non-static component /(public)/casting/[id]/page
+[debug] [2026-07-15T20:23:22.618Z]  • non-static component /(public)/casting/page
+[debug] [2026-07-15T20:23:22.618Z]  • non-static component /(public)/producer/[id]/page
+[debug] [2026-07-15T20:23:22.618Z]  • non-static component /(public)/talent/page
+[debug] [2026-07-15T20:23:22.619Z]  • non-static component /api/talent/[slug]/comp-card/route
+[debug] [2026-07-15T20:23:22.619Z]  • non-static component /auth/callback/route
+[info]  • and 7 other reasons, use --debug to see more
+[info] 
+[debug] [2026-07-15T20:23:24.516Z] skipping / due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /_global-error due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /_not-found due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /admin due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /admin/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /admin/categories due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /admin/producers due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /agent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /auth/forgot-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /auth/login due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /auth/register due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /auth/reset-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.516Z] skipping /casting/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /logout due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /producer/search due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/media due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /talent/settings due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /unauthorized due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /404 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:24.517Z] skipping /500 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:23:39.675Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:23:39.675Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:23:39.675Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:23:41.444Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:23:41.445Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[debug] [2026-07-15T20:23:43.630Z] Error: EPERM: operation not permitted, symlink 'C:\My Drive\My Drive\ActorsStudio\node_modules\@react-pdf\renderer' -> 'C:\My Drive\My Drive\ActorsStudio\.firebase\actorsstudio2026\functions\.next\node_modules\@react-pdf\renderer-5f716e9bc7d68b8a'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-07-15T20:23:59.364Z] ----------------------------------------------------------------------
+[debug] [2026-07-15T20:23:59.367Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Muddasir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-07-15T20:23:59.367Z] CLI Version:   15.23.0
+[debug] [2026-07-15T20:23:59.367Z] Platform:      win32
+[debug] [2026-07-15T20:23:59.367Z] Node Version:  v22.22.3
+[debug] [2026-07-15T20:23:59.368Z] Detected Agent: antigravity
+[debug] [2026-07-15T20:23:59.368Z] Time:          Thu Jul 16 2026 01:23:59 GMT+0500 (Pakistan Standard Time)
+[debug] [2026-07-15T20:23:59.368Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-15T20:24:02.794Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-15T20:24:02.794Z] > authorizing via signed-in user (starlightentertainment.pk@gmail.com)
+[debug] [2026-07-15T20:24:02.794Z] [iam] checking project actorsstudio2026 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-15T20:24:02.808Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:02.808Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:02.809Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions [none]
+[debug] [2026-07-15T20:24:02.809Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions  x-goog-user-project=actorsstudio2026
+[debug] [2026-07-15T20:24:02.809Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:24:04.226Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions 200
+[debug] [2026-07-15T20:24:04.227Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:24:04.227Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:04.228Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:04.228Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 [none]
+[debug] [2026-07-15T20:24:04.829Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 200
+[debug] [2026-07-15T20:24:04.830Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 {"projectId":"actorsstudio2026","projectNumber":"1036418977391","displayName":"ActorsStudio","name":"projects/actorsstudio2026","resources":{"hostingSite":"actorsstudio2026"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_8c90c28e-26fa-4b85-9ae7-01ef437f9d7d"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-07-15T20:24:18.923Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:18.923Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:18.923Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:24:20.650Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:24:20.650Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.10 (Turbopack)
+
+[info] - Environments: .env.local
+
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 8.8s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 11.5s ...
+
+[info]   Collecting page data using 11 workers ...
+
+[info]   Generating static pages using 11 workers (0/34) ...
+
+[info]   Generating static pages using 11 workers (8/34) 
+
+[info]   Generating static pages using 11 workers (16/34) 
+
+[info]   Generating static pages using 11 workers (25/34) 
+
+[info] ✓ Generating static pages using 11 workers (34/34) in 1235ms
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/casting
+├ ○ /admin/categories
+├ ○ /admin/producers
+├ ○ /agent/dashboard
+├ ƒ /api/talent/[slug]/comp-card
+├ ƒ /auth/callback
+├ ○ /auth/forgot-password
+├ ○ /auth/login
+├ ○ /auth/register
+├ ○ /auth/reset-password
+├ ƒ /casting
+├ ƒ /casting/[id]
+├ ○ /casting/dashboard
+├ ○ /logout
+├ ƒ /producer/[id]
+├ ○ /producer/applications
+├ ○ /producer/casting
+├ ƒ /producer/casting/[id]/applications
+├ ƒ /producer/casting/[id]/edit
+├ ƒ /producer/casting/create
+├ ○ /producer/dashboard
+├ ○ /producer/onboarding
+├ ○ /producer/profile
+├ ○ /producer/search
+├ ƒ /producer/talent-search
+├ ƒ /talent
+├ ● /talent/[slug]
+├ ○ /talent/applications
+├ ○ /talent/casting
+├ ○ /talent/dashboard
+├ ○ /talent/media
+├ ○ /talent/onboarding
+├ ○ /talent/profile
+├ ○ /talent/settings
+└ ○ /unauthorized
+
+
+ƒ Proxy (Middleware)
+
+[info] 
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • middleware
+[info]  • use of fallback /talent/[slug]
+[info]  • non-static component /(dashboard)/producer/casting/[id]/applications/page
+[info]  • non-static component /(dashboard)/producer/casting/[id]/edit/page
+[info]  • non-static component /(dashboard)/producer/casting/create/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /(dashboard)/producer/talent-search/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /(public)/casting/[id]/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /(public)/casting/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /(public)/producer/[id]/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /(public)/talent/page
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /api/talent/[slug]/comp-card/route
+[debug] [2026-07-15T20:24:51.039Z]  • non-static component /auth/callback/route
+[info]  • and 7 other reasons, use --debug to see more
+[info] 
+[debug] [2026-07-15T20:24:52.835Z] skipping / due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /_global-error due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /_not-found due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /admin due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /admin/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /admin/categories due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /admin/producers due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /agent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /auth/forgot-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /auth/login due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /auth/register due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /auth/reset-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /casting/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /logout due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.836Z] skipping /producer/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /producer/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /producer/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /producer/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /producer/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /producer/search due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/media due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /talent/settings due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /unauthorized due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /404 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:52.837Z] skipping /500 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:24:58.553Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:58.553Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:24:58.553Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:25:00.330Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:25:00.330Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[debug] [2026-07-15T20:25:02.443Z] Error: EPERM: operation not permitted, symlink 'C:\My Drive\My Drive\ActorsStudio\node_modules\@react-pdf\renderer' -> 'C:\My Drive\My Drive\ActorsStudio\.firebase\actorsstudio2026\functions\.next\node_modules\@react-pdf\renderer-5f716e9bc7d68b8a'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-07-15T20:25:18.739Z] ----------------------------------------------------------------------
+[debug] [2026-07-15T20:25:18.741Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Muddasir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-07-15T20:25:18.742Z] CLI Version:   15.23.0
+[debug] [2026-07-15T20:25:18.742Z] Platform:      win32
+[debug] [2026-07-15T20:25:18.742Z] Node Version:  v22.22.3
+[debug] [2026-07-15T20:25:18.742Z] Detected Agent: antigravity
+[debug] [2026-07-15T20:25:18.742Z] Time:          Thu Jul 16 2026 01:25:18 GMT+0500 (Pakistan Standard Time)
+[debug] [2026-07-15T20:25:18.742Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-15T20:25:22.003Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-15T20:25:22.003Z] > authorizing via signed-in user (starlightentertainment.pk@gmail.com)
+[debug] [2026-07-15T20:25:22.003Z] [iam] checking project actorsstudio2026 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-15T20:25:22.016Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:22.016Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:22.017Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions [none]
+[debug] [2026-07-15T20:25:22.017Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions  x-goog-user-project=actorsstudio2026
+[debug] [2026-07-15T20:25:22.017Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:25:23.477Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions 200
+[debug] [2026-07-15T20:25:23.477Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:25:23.478Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:23.478Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:23.478Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 [none]
+[debug] [2026-07-15T20:25:23.995Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 200
+[debug] [2026-07-15T20:25:23.996Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 {"projectId":"actorsstudio2026","projectNumber":"1036418977391","displayName":"ActorsStudio","name":"projects/actorsstudio2026","resources":{"hostingSite":"actorsstudio2026"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_8c90c28e-26fa-4b85-9ae7-01ef437f9d7d"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-07-15T20:25:38.477Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:38.477Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:25:38.477Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:25:40.294Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:25:40.294Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.10 (Turbopack)
+
+[info] - Environments: .env.local
+
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 8.9s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 11.4s ...
+
+[info]   Collecting page data using 11 workers ...
+
+[info]   Generating static pages using 11 workers (0/34) ...
+
+[info]   Generating static pages using 11 workers (8/34) 
+
+[info]   Generating static pages using 11 workers (16/34) 
+
+[info]   Generating static pages using 11 workers (25/34) 
+
+[info] ✓ Generating static pages using 11 workers (34/34) in 1183ms
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/casting
+├ ○ /admin/categories
+├ ○ /admin/producers
+├ ○ /agent/dashboard
+├ ƒ /api/talent/[slug]/comp-card
+├ ƒ /auth/callback
+├ ○ /auth/forgot-password
+├ ○ /auth/login
+├ ○ /auth/register
+├ ○ /auth/reset-password
+├ ƒ /casting
+├ ƒ /casting/[id]
+├ ○ /casting/dashboard
+├ ○ /logout
+├ ƒ /producer/[id]
+├ ○ /producer/applications
+├ ○ /producer/casting
+├ ƒ /producer/casting/[id]/applications
+├ ƒ /producer/casting/[id]/edit
+├ ƒ /producer/casting/create
+├ ○ /producer/dashboard
+├ ○ /producer/onboarding
+├ ○ /producer/profile
+├ ○ /producer/search
+├ ƒ /producer/talent-search
+├ ƒ /talent
+├ ● /talent/[slug]
+├ ○ /talent/applications
+├ ○ /talent/casting
+├ ○ /talent/dashboard
+├ ○ /talent/media
+├ ○ /talent/onboarding
+├ ○ /talent/profile
+├ ○ /talent/settings
+└ ○ /unauthorized
+
+
+ƒ Proxy (Middleware)
+
+
+[info] ○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • middleware
+[info]  • use of fallback /talent/[slug]
+[info]  • non-static component /(dashboard)/producer/casting/[id]/applications/page
+[info]  • non-static component /(dashboard)/producer/casting/[id]/edit/page
+[info]  • non-static component /(dashboard)/producer/casting/create/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /(dashboard)/producer/talent-search/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /(public)/casting/[id]/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /(public)/casting/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /(public)/producer/[id]/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /(public)/talent/page
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /api/talent/[slug]/comp-card/route
+[debug] [2026-07-15T20:26:10.712Z]  • non-static component /auth/callback/route
+[info]  • and 7 other reasons, use --debug to see more
+[info] 
+[debug] [2026-07-15T20:26:12.935Z] skipping / due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /_global-error due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /_not-found due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /admin due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /admin/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /admin/categories due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /admin/producers due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /agent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /auth/forgot-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /auth/login due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /auth/register due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /auth/reset-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.936Z] skipping /casting/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /logout due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /producer/search due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.937Z] skipping /talent/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/media due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /talent/settings due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /unauthorized due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /404 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:12.938Z] skipping /500 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:26:19.737Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:19.737Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:19.737Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:26:21.599Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:26:21.600Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[debug] [2026-07-15T20:26:24.178Z] Error: EPERM: operation not permitted, symlink 'C:\My Drive\My Drive\ActorsStudio\node_modules\@react-pdf\renderer' -> 'C:\My Drive\My Drive\ActorsStudio\.firebase\actorsstudio2026\functions\.next\node_modules\@react-pdf\renderer-5f716e9bc7d68b8a'
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-07-15T20:26:35.426Z] ----------------------------------------------------------------------
+[debug] [2026-07-15T20:26:35.429Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Muddasir\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting --debug
+[debug] [2026-07-15T20:26:35.429Z] CLI Version:   15.23.0
+[debug] [2026-07-15T20:26:35.430Z] Platform:      win32
+[debug] [2026-07-15T20:26:35.430Z] Node Version:  v22.22.3
+[debug] [2026-07-15T20:26:35.430Z] Detected Agent: antigravity
+[debug] [2026-07-15T20:26:35.430Z] Time:          Thu Jul 16 2026 01:26:35 GMT+0500 (Pakistan Standard Time)
+[debug] [2026-07-15T20:26:35.430Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-07-15T20:26:39.212Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-07-15T20:26:39.213Z] > authorizing via signed-in user (starlightentertainment.pk@gmail.com)
+[debug] [2026-07-15T20:26:39.213Z] [iam] checking project actorsstudio2026 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-07-15T20:26:39.233Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:39.234Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:39.237Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions [none]
+[debug] [2026-07-15T20:26:39.237Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions  x-goog-user-project=actorsstudio2026
+[debug] [2026-07-15T20:26:39.237Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:26:40.697Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions 200
+[debug] [2026-07-15T20:26:40.697Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/actorsstudio2026:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-07-15T20:26:40.699Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:40.699Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:40.700Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 [none]
+[debug] [2026-07-15T20:26:41.275Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 200
+[debug] [2026-07-15T20:26:41.275Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/actorsstudio2026 {"projectId":"actorsstudio2026","projectNumber":"1036418977391","displayName":"ActorsStudio","name":"projects/actorsstudio2026","resources":{"hostingSite":"actorsstudio2026"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_8c90c28e-26fa-4b85-9ae7-01ef437f9d7d"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-07-15T20:26:57.753Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:57.754Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:26:57.754Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:26:59.463Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:26:59.463Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.10 (Turbopack)
+
+[info] - Environments: .env.local
+
+
+[info]   Creating an optimized production build ...
+
+[info] 
+
+[info] [391.66ms] [@tailwindcss/postcss] src\app\globals.css
+[  0.11ms]   ↳ Quick bail check
+[ 75.52ms]   ↳ Setup compiler
+[  0.70ms]     ↳ PostCSS AST -> Tailwind CSS AST
+[ 74.77ms]     ↳ Create compiler
+[  0.69ms]   ↳ Register full rebuild paths
+[  2.76ms]   ↳ Setup scanner
+[ 58.67ms]   ↳ Scan for candidates
+[ 23.41ms]   ↳ Register dependency messages
+[115.64ms]   ↳ Build utilities
+[ 85.48ms]   ↳ Optimization
+[  2.95ms]     ↳ AST -> CSS
+
+[info] [ 42.61ms]     ↳ Lightning CSS
+[ 39.81ms]     ↳ CSS -> PostCSS AST
+[ 28.46ms]   ↳ Update PostCSS AST
+
+
+[info] 
+
+[info] [0.59ms] [@tailwindcss/postcss] node_modules\yet-another-react-lightbox\dist\styles.css
+[0.55ms]   ↳ Quick bail check
+
+
+[info] ✓ Compiled successfully in 10.1s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 14.7s ...
+
+[info]   Collecting page data using 11 workers ...
+
+[info]   Generating static pages using 11 workers (0/34) ...
+
+[info]   Generating static pages using 11 workers (8/34) 
+
+[info]   Generating static pages using 11 workers (16/34) 
+
+[info]   Generating static pages using 11 workers (25/34) 
+
+[info] ✓ Generating static pages using 11 workers (34/34) in 1463ms
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/casting
+├ ○ /admin/categories
+├ ○ /admin/producers
+├ ○ /agent/dashboard
+├ ƒ /api/talent/[slug]/comp-card
+├ ƒ /auth/callback
+├ ○ /auth/forgot-password
+├ ○ /auth/login
+├ ○ /auth/register
+├ ○ /auth/reset-password
+├ ƒ /casting
+├ ƒ /casting/[id]
+├ ○ /casting/dashboard
+├ ○ /logout
+├ ƒ /producer/[id]
+├ ○ /producer/applications
+├ ○ /producer/casting
+├ ƒ /producer/casting/[id]/applications
+├ ƒ /producer/casting/[id]/edit
+├ ƒ /producer/casting/create
+├ ○ /producer/dashboard
+├ ○ /producer/onboarding
+├ ○ /producer/profile
+├ ○ /producer/search
+├ ƒ /producer/talent-search
+├ ƒ /talent
+├ ● /talent/[slug]
+├ ○ /talent/applications
+├ ○ /talent/casting
+├ ○ /talent/dashboard
+├ ○ /talent/media
+├ ○ /talent/onboarding
+├ ○ /talent/profile
+├ ○ /talent/settings
+└ ○ /unauthorized
+
+
+ƒ Proxy (Middleware)
+
+[info] 
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • middleware
+[info]  • use of fallback /talent/[slug]
+[info]  • non-static component /(dashboard)/producer/casting/[id]/applications/page
+[info]  • non-static component /(dashboard)/producer/casting/[id]/edit/page
+[info]  • non-static component /(dashboard)/producer/casting/create/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /(dashboard)/producer/talent-search/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /(public)/casting/[id]/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /(public)/casting/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /(public)/producer/[id]/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /(public)/talent/page
+[debug] [2026-07-15T20:27:35.845Z]  • non-static component /api/talent/[slug]/comp-card/route
+[debug] [2026-07-15T20:27:35.846Z]  • non-static component /auth/callback/route
+[info] 
+[debug] [2026-07-15T20:27:37.997Z] skipping / due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /_global-error due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /_not-found due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /admin due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /admin/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /admin/categories due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /admin/producers due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /agent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /auth/forgot-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /auth/login due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.998Z] skipping /auth/register due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.999Z] skipping /auth/reset-password due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.999Z] skipping /casting/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:37.999Z] skipping /logout due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /producer/search due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/applications due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/casting due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/dashboard due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/media due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/onboarding due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.000Z] skipping /talent/profile due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.001Z] skipping /talent/settings due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.001Z] skipping /unauthorized due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.001Z] skipping /404 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:38.001Z] skipping /500 due to it matching an unsupported rewrite/redirect/header or middlware
+[debug] [2026-07-15T20:27:44.750Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:27:44.750Z] Checked if tokens are valid: true, expires at: 1784150088292
+[debug] [2026-07-15T20:27:44.750Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 [none]
+[debug] [2026-07-15T20:27:46.473Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 200
+[debug] [2026-07-15T20:27:46.474Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/actorsstudio2026/sites/actorsstudio2026 {"name":"projects/actorsstudio2026/sites/actorsstudio2026","defaultUrl":"https://actorsstudio2026.web.app","appId":"1:1036418977391:web:3b478a979d56906ed6c79a","type":"DEFAULT_SITE"}
+[debug] [2026-07-15T20:27:49.074Z] Error: EPERM: operation not permitted, symlink 'C:\My Drive\My Drive\ActorsStudio\node_modules\@react-pdf\renderer' -> 'C:\My Drive\My Drive\ActorsStudio\.firebase\actorsstudio2026\functions\.next\node_modules\@react-pdf\renderer-5f716e9bc7d68b8a'
+[error] 
+[error] Error: An unexpected error has occurred.
