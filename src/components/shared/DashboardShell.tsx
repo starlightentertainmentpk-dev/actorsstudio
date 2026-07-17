@@ -4,7 +4,8 @@ import { ReactNode } from "react"
 import { Sidebar } from "./Sidebar"
 import { PageTransition } from "./PageTransition"
 import { ThemeToggle } from "./ThemeToggle"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Bell, User, LogOut } from "lucide-react"
 import Link from "next/link"
 
@@ -48,11 +49,13 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
                 <p className="text-[10px] text-muted-foreground leading-none mt-1">user@{role}.com</p>
               </div>
               
-              <Button asChild variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-destructive transition-colors ml-1" title="Sign Out">
-                <Link href="/logout">
-                  <LogOut className="h-4 w-4" />
-                </Link>
-              </Button>
+              <Link
+                href="/logout"
+                className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "w-8 h-8 text-muted-foreground hover:text-destructive transition-colors ml-1")}
+                title="Sign Out"
+              >
+                <LogOut className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </header>

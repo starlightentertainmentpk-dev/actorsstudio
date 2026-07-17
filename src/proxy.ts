@@ -11,7 +11,7 @@ const ROLE_ROUTES: Record<string, string[]> = {
   casting_director: ["/casting", "/producer"],
 }
 
-export default async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -99,6 +99,8 @@ export default async function middleware(request: NextRequest) {
 
   return supabaseResponse
 }
+
+export default proxy
 
 export const config = {
   matcher: [
