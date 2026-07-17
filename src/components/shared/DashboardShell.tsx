@@ -48,11 +48,11 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
                 <p className="text-[10px] text-muted-foreground leading-none mt-1">user@{role}.com</p>
               </div>
               
-              <Link href="/logout">
-                <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-destructive transition-colors ml-1" title="Sign Out">
+              <Button asChild variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-destructive transition-colors ml-1" title="Sign Out">
+                <Link href="/logout">
                   <LogOut className="h-4 w-4" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </header>

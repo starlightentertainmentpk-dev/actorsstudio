@@ -11,7 +11,7 @@ const ROLE_ROUTES: Record<string, string[]> = {
   casting_director: ["/casting", "/producer"],
 }
 
-export default async function proxy(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -47,8 +47,8 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login", request.url))
   }
 
-  // Public paths: root, auth page, about page, API endpoints
-  const BASE_PUBLIC_PATHS = ["/", "/auth", "/about", "/api"]
+  // Public paths: root, auth page, about page, API endpoints, logout, unauthorized
+  const BASE_PUBLIC_PATHS = ["/", "/auth", "/about", "/api", "/logout", "/unauthorized"]
   
   // Distinguish public profiles/directories under /talent and /casting
   // from their private dashboards under /talent/dashboard, /casting/dashboard, etc.
