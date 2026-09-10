@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Actor's Studio — Talent Marketplace Pakistan",
+  title: "Actor's Studio - Talent Marketplace Pakistan",
   description: "Actor's Studio is Pakistan's premier production-grade talent marketplace, connecting actors, models, voice artists, and performers with top producers and brands.",
 };
 

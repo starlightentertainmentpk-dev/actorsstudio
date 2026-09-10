@@ -20,6 +20,7 @@ import {
   ShieldCheck,
   Layers,
   Users,
+  UserCheck,
   BarChart,
   Settings,
 } from "lucide-react"
@@ -56,10 +57,11 @@ export function Sidebar({ role, className }: SidebarProps) {
     ],
     admin: [
       { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+      { label: "User Management", href: "/admin/users", icon: Users },
       { label: "Producer Queue", href: "/admin/producers", icon: ShieldCheck },
       { label: "Categories", href: "/admin/categories", icon: Layers },
       { label: "Casting Calls", href: "/admin/casting", icon: Tv },
-      { label: "User Management", href: "/admin/users", icon: Users },
+      { label: "Talent Queue", href: "/admin/talent", icon: UserCheck },
       { label: "Analytics", href: "/admin/analytics", icon: BarChart },
     ],
   }

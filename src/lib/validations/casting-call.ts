@@ -10,6 +10,17 @@ export const castingCallSchema = z.object({
   compensation:        z.string().max(200).optional().or(z.literal('')),
   requirements_json:   z.any().optional(),
   status: z.enum(['draft', 'open', 'closed', 'cancelled']),
-})
+}).refine(
+  (data) => {
+    if (!data.application_deadline) return true
+    const deadline = new Date(data.application_deadline)
+    if (isNaN(deadline.getTime())) return false
+    return deadline.getTime() > Date.now()
+  },
+  {
+    message: 'Application deadline must be in the future',
+    path: ['application_deadline'],
+  }
+)
 
 export type CastingCallFormData = z.infer<typeof castingCallSchema>

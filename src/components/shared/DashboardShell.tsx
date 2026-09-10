@@ -9,12 +9,16 @@ import { cn } from "@/lib/utils"
 import { Bell, User, LogOut } from "lucide-react"
 import Link from "next/link"
 
+import { useUser } from "@/hooks/useUser"
+
 interface DashboardShellProps {
   role: "talent" | "producer" | "admin"
   children: ReactNode
 }
 
 export function DashboardShell({ role, children }: DashboardShellProps) {
+  const { data: user } = useUser()
+
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background">
       {/* Sidebar Navigation */}
@@ -42,11 +46,15 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
             {/* User Stub */}
             <div className="flex items-center gap-2 border-l border-border/40 pl-4">
               <div className="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm shadow-inner shadow-brand-600/30">
-                {role[0].toUpperCase()}
+                {(user?.email?.[0] || role[0]).toUpperCase()}
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-semibold leading-none text-foreground capitalize">{role} User</p>
-                <p className="text-[10px] text-muted-foreground leading-none mt-1">user@{role}.com</p>
+                <p className="text-xs font-semibold leading-none text-foreground capitalize">
+                  {role === "talent" ? "Artist Account" : role === "producer" ? "Producer Account" : "Studio Admin"}
+                </p>
+                <p className="text-[10px] text-muted-foreground leading-none mt-1">
+                  {user?.email || `user@${role}.com`}
+                </p>
               </div>
               
               <Link

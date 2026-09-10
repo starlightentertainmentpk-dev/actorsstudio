@@ -4,7 +4,7 @@ import { useState, useTransition } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { createClient } from "@/lib/supabase/client"
-import { updateApplicationStatus, bulkUpdateApplicationStatus } from "@/app/(dashboard)/producer/applications/actions"
+import { updateApplicationStatus, bulkUpdateApplicationStatus, scheduleAudition } from "@/app/(dashboard)/producer/applications/actions"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
@@ -57,6 +57,10 @@ export default function CastingCallApplicationsPage() {
   const [selectedAppIds, setSelectedAppIds] = useState<Record<string, boolean>>({})
   const [schedulerModalOpen, setSchedulerModalOpen] = useState(false)
   const [selectedApplicantName, setSelectedApplicantName] = useState("")
+  const [selectedApplication, setSelectedApplication] = useState<ApplicationWithTalent | null>(null)
+  const [auditionMode, setAuditionMode] = useState<"in_person" | "self_tape" | "video_call">("in_person")
+  const [scheduledAt, setScheduledAt] = useState("")
+  const [locationOrLink, setLocationOrLink] = useState("")
 
   const [isPending, startTransition] = useTransition()
   const [actionError, setActionError] = useState("")
@@ -251,8 +255,12 @@ export default function CastingCallApplicationsPage() {
     })
   }
 
-  const triggerSchedulerStub = (name: string) => {
-    setSelectedApplicantName(name)
+  const triggerScheduler = (app: ApplicationWithTalent) => {
+    setSelectedApplication(app)
+    setSelectedApplicantName(app.talent_profiles?.stage_name || app.talent_profiles?.full_name || "")
+    setAuditionMode("in_person")
+    setScheduledAt("")
+    setLocationOrLink("")
     setSchedulerModalOpen(true)
   }
 
@@ -582,7 +590,7 @@ export default function CastingCallApplicationsPage() {
                       <Button
                         size="sm"
                         disabled={isPending}
-                        onClick={() => triggerSchedulerStub(displayName)}
+                        onClick={() => triggerScheduler(app)}
                         className="w-full md:w-auto bg-purple-500 hover:bg-purple-600 text-white font-semibold text-xs h-8 px-4 rounded-lg cursor-pointer flex items-center gap-1"
                       >
                         <CalendarDays className="h-3.5 w-3.5" /> Schedule Audition
@@ -633,7 +641,7 @@ export default function CastingCallApplicationsPage() {
         </div>
       )}
 
-      {/* Scheduler Modal Placeholder for Prompt 13 */}
+      {/* Scheduler Modal */}
       {schedulerModalOpen && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-card border border-border/80 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4 animate-in fade-in-50 zoom-in-95 duration-200">
@@ -650,39 +658,96 @@ export default function CastingCallApplicationsPage() {
               </button>
             </div>
 
-            <div className="space-y-4 py-3 text-xs text-foreground/80">
-              <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl text-purple-600 dark:text-purple-400 font-semibold">
-                This is a placeholder interface for Prompt 13: Auditions Booking & Scheduling.
-              </div>
-              <p className="leading-relaxed">
-                In Tier 1 - Step 13, you will be able to schedule in-person, video call, or self-tape auditions with specific slots directly linked to {selectedApplicantName}'s schedule.
-              </p>
-              <p className="leading-relaxed">
-                To continue testing the application flow, click "Simulate Scheduling" to transition this applicant to the Audition status.
-              </p>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-2 text-xs">
-              <Button
-                variant="ghost"
-                onClick={() => setSchedulerModalOpen(false)}
-                className="h-9 rounded-lg font-semibold cursor-pointer border border-border/50 text-foreground"
-              >
-                Close
-              </Button>
-              <Button
-                onClick={async () => {
-                  const targetApp = filteredApps.find((a) => (a.talent_profiles?.stage_name || a.talent_profiles?.full_name) === selectedApplicantName)
-                  if (targetApp) {
-                    await handleUpdateStatus(targetApp.id, "audition")
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault()
+                if (!selectedApplication) return
+                setActionError("")
+                startTransition(async () => {
+                  try {
+                    await scheduleAudition({
+                      castingCallId,
+                      talentId: selectedApplication.talent_id,
+                      mode: auditionMode,
+                      scheduledAt: new Date(scheduledAt).toISOString(),
+                      locationOrLink: locationOrLink || undefined,
+                    })
+                    queryClient.invalidateQueries({ queryKey: ["producer-applications-list"] })
+                    setSchedulerModalOpen(false)
+                  } catch (err: any) {
+                    setActionError(err.message || "Failed to schedule audition.")
                   }
-                  setSchedulerModalOpen(false)
-                }}
-                className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-md shadow-brand-500/10 h-9 rounded-lg cursor-pointer"
-              >
-                Simulate Scheduling
-              </Button>
-            </div>
+                })
+              }}
+              className="space-y-4 text-xs"
+            >
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-foreground block">
+                  Audition Mode
+                </label>
+                <select
+                  value={auditionMode}
+                  onChange={(e: any) => setAuditionMode(e.target.value)}
+                  className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                  required
+                >
+                  <option value="in_person">In Person (Physical)</option>
+                  <option value="video_call">Video Call (Online)</option>
+                  <option value="self_tape">Self Tape (Recorded)</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-foreground block">
+                  Date & Time
+                </label>
+                <input
+                  type="datetime-local"
+                  value={scheduledAt}
+                  onChange={(e) => setScheduledAt(e.target.value)}
+                  className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-foreground block">
+                  Location or Joining Link
+                </label>
+                <input
+                  type="text"
+                  value={locationOrLink}
+                  onChange={(e) => setLocationOrLink(e.target.value)}
+                  placeholder={
+                    auditionMode === "video_call"
+                      ? "e.g. Zoom link, Google Meet URL"
+                      : auditionMode === "self_tape"
+                      ? "e.g. Upload instructions, submission details (optional)"
+                      : "e.g. Studio Address, Room Number"
+                  }
+                  className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 text-xs">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setSchedulerModalOpen(false)}
+                  className="h-9 rounded-lg font-semibold cursor-pointer border border-border/50 text-foreground"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className="bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-md shadow-brand-500/10 h-9 rounded-lg cursor-pointer flex items-center gap-1.5"
+                >
+                  {isPending && <Loader2 className="h-3 w-3 animate-spin" />}
+                  Schedule Audition
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       )}

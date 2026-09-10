@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server"
 import { adminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
 import type { Json } from "@/types/database"
+import { dispatchNotification } from "@/lib/notifications"
 
 // Verify Admin Permissions helper
 async function verifyAdmin() {
@@ -28,16 +29,6 @@ async function verifyAdmin() {
   return { user, supabase }
 }
 
-// Stub function for dispatching notifications (to be implemented fully in Prompt 14)
-async function dispatchNotification(params: {
-  userId: string
-  type: string
-  channel: "email" | "in_app" | "whatsapp"
-  payload: Record<string, unknown>
-}) {
-  console.log("Notification dispatched:", params)
-}
-
 // Audit logging helper using adminClient
 async function logAudit(
   actorId: string,
@@ -59,7 +50,7 @@ async function logAudit(
 
 // Action: Verify Producer
 export async function verifyProducer(producerId: string, producerUserId: string, companyName: string) {
-  const { user } = await verifyAdmin()
+  const { user, supabase } = await verifyAdmin()
 
   // Update producer profiles to verified = true
   const { error } = await adminClient
@@ -69,13 +60,23 @@ export async function verifyProducer(producerId: string, producerUserId: string,
 
   if (error) throw error
 
-  // Trigger Notification to the producer
-  await dispatchNotification({
-    userId: producerUserId,
-    type: "producer_verified",
-    channel: "email",
-    payload: { company_name: companyName },
-  })
+  // Fetch producer email from users table
+  const { data: userData } = await supabase
+    .from("users")
+    .select("email")
+    .eq("id", producerUserId)
+    .single()
+
+  if (userData?.email) {
+    // Trigger Notification to the producer
+    await dispatchNotification({
+      targetEmail: userData.email,
+      type: "producer_approved",
+      payload: { company_name: companyName },
+    })
+  } else {
+    console.warn(`Could not find email for user ID ${producerUserId} to send verification notification.`)
+  }
 
   // Audit Logging
   await logAudit(user.id, "verify_producer", producerId, { company_name: companyName })
@@ -91,7 +92,7 @@ export async function rejectProducer(
   companyName: string,
   reason: string
 ) {
-  const { user } = await verifyAdmin()
+  const { user, supabase } = await verifyAdmin()
 
   // Update profile to reset docs URL (allowing re-upload) and mark unverified
   const { error } = await adminClient
@@ -105,16 +106,26 @@ export async function rejectProducer(
 
   if (error) throw error
 
-  // Trigger Notification with Rejection Reason
-  await dispatchNotification({
-    userId: producerUserId,
-    type: "producer_rejected",
-    channel: "email",
-    payload: {
-      company_name: companyName,
-      rejection_reason: reason,
-    },
-  })
+  // Fetch producer email from users table
+  const { data: userData } = await supabase
+    .from("users")
+    .select("email")
+    .eq("id", producerUserId)
+    .single()
+
+  if (userData?.email) {
+    // Trigger Notification with Rejection Reason
+    await dispatchNotification({
+      targetEmail: userData.email,
+      type: "producer_rejected",
+      payload: {
+        company_name: companyName,
+        reason: reason,
+      },
+    })
+  } else {
+    console.warn(`Could not find email for user ID ${producerUserId} to send rejection notification.`)
+  }
 
   // Audit Logging
   await logAudit(user.id, "reject_producer", producerId, {

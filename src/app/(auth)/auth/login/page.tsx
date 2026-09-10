@@ -9,6 +9,8 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
+import { loginWithEmail } from "./actions"
+
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -38,50 +40,24 @@ function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     setIsLoading(true)
     setErrorMsg(null)
-    const supabase = createClient()
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const res = await loginWithEmail({
         email: values.email,
         password: values.password,
       })
 
-      if (error) {
-        throw new Error(error.message)
+      if (!res.success) {
+        throw new Error(res.error || "Invalid email or password")
       }
 
-      if (data?.user) {
-        // Fetch role from public.users
-        const { data: userData, error: roleError } = await supabase
-          .from("users")
-          .select("role")
-          .eq("id", data.user.id)
-          .single()
+      const nextParam = searchParams.get("next")
+      const destination = nextParam
+        ? decodeURIComponent(nextParam)
+        : (res.destination || "/talent/dashboard")
 
-        if (roleError) {
-          console.error("Error fetching user role:", roleError)
-        }
-
-        const role = userData?.role ?? "talent"
-
-        const dashboardMap: Record<string, string> = {
-          super_admin: "/admin",
-          studio_admin: "/admin",
-          studio_staff: "/admin/talent",
-          talent: "/talent/dashboard",
-          agent_manager: "/agent/dashboard",
-          producer_brand: "/producer/dashboard",
-          casting_director: "/casting/dashboard",
-        }
-
-        const nextParam = searchParams.get("next")
-        const destination = nextParam
-          ? decodeURIComponent(nextParam)
-          : (dashboardMap[role] ?? "/talent/dashboard")
-
-        router.push(destination)
-        router.refresh()
-      }
+      // Use full browser navigation to ensure cookies are immediately available and avoid RSC header issues
+      window.location.href = destination
     } catch (err: any) {
       setErrorMsg(err.message || "Invalid email or password")
       setIsLoading(false)
@@ -168,7 +144,7 @@ function LoginForm() {
           <input
             id="password"
             type="password"
-            placeholder="••••••••"
+            placeholder="********"
             disabled={isLoading || isGoogleLoading}
             {...register("password")}
             className="w-full h-9 rounded-lg bg-surface-900 border border-border/60 px-3 py-1 text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors disabled:opacity-50"

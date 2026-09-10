@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const step1Schema = z.object({
   full_name:   z.string().min(2, 'Full name is required'),
   stage_name:  z.string().optional().or(z.literal('')),
-  dob:         z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date (YYYY-MM-DD)').optional().or(z.literal('')),
+  dob:         z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date (YYYY-MM-DD)'),
   gender:      z.enum(['male', 'female', 'non_binary', 'prefer_not_to_say']).optional(),
   city:        z.string().min(2, 'City is required'),
   phone:       z.string().regex(/^(\+92|0)[0-9]{10}$/, 'Enter a valid Pakistani phone number').optional().or(z.literal('')),

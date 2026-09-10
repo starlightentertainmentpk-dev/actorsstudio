@@ -35,8 +35,12 @@ type Props = {
   params: Promise<{ id: string }>
 }
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+function sanitizeEnv(val?: string): string {
+  return (val || "").replace(/[^\x20-\x7E]/g, "").trim()
+}
+
+const supabaseUrl = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)
+const supabaseAnonKey = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
 const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey)
 
 // Fetch Helper to avoid code duplication

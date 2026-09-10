@@ -11,12 +11,16 @@ const ROLE_ROUTES: Record<string, string[]> = {
   casting_director: ["/casting", "/producer"],
 }
 
+function sanitizeEnv(val?: string): string {
+  return (val || "").replace(/[^\x20-\x7E]/g, "").trim()
+}
+
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL),
+    sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
