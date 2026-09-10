@@ -39,8 +39,8 @@ function sanitizeEnv(val?: string): string {
   return (val || "").replace(/[^\x20-\x7E]/g, "").trim()
 }
 
-const supabaseUrl = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)
-const supabaseAnonKey = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+const supabaseUrl = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL) || "https://placeholder.supabase.co"
+const supabaseAnonKey = sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || "placeholder"
 const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey)
 
 // Fetch Helper to avoid code duplication
