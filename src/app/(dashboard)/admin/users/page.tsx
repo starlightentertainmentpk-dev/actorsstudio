@@ -7,6 +7,8 @@ import { DashboardShell } from "@/components/shared/DashboardShell"
 import { createClient } from "@/lib/supabase/client"
 import { updateUserRole, updateUserStatus } from "./actions"
 import { Button } from "@/components/ui/button"
+import { TalentFullProfileModal } from "@/components/features/admin/TalentFullProfileModal"
+import { ProducerFullProfileModal } from "@/components/features/admin/ProducerFullProfileModal"
 import {
   Loader2,
   Search,
@@ -15,11 +17,19 @@ import {
   ShieldAlert,
   Calendar,
   CheckCircle2,
-  Users
+  Users,
+  Eye
 } from "lucide-react"
 import type { Database } from "@/types/database"
 
 type UserRow = Database["public"]["Tables"]["users"]["Row"]
+type TalentProfile = Database["public"]["Tables"]["talent_profiles"]["Row"] & {
+  users?: { email: string; phone?: string | null; status?: string } | null
+}
+type ProducerProfile = Database["public"]["Tables"]["producer_profiles"]["Row"] & {
+  users?: { email: string; phone?: string | null; role?: string } | null
+}
+type MediaAsset = Database["public"]["Tables"]["media_assets"]["Row"]
 
 export default function AdminUsersPage() {
   const { user, isLoading: authLoading } = useRequireAuth(["super_admin", "studio_admin"])
@@ -35,6 +45,17 @@ export default function AdminUsersPage() {
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null)
   const [actionError, setActionError] = useState("")
   const [actionSuccess, setActionSuccess] = useState("")
+
+  // Profile Modal states
+  const [selectedTalent, setSelectedTalent] = useState<TalentProfile | null>(null)
+  const [talentMedia, setTalentMedia] = useState<MediaAsset[]>([])
+  const [talentCategoryName, setTalentCategoryName] = useState("")
+  const [talentSubCategoryName, setTalentSubCategoryName] = useState<string | undefined>(undefined)
+  const [isTalentModalOpen, setIsTalentModalOpen] = useState(false)
+
+  const [selectedProducer, setSelectedProducer] = useState<ProducerProfile | null>(null)
+  const [isProducerModalOpen, setIsProducerModalOpen] = useState(false)
+  const [loadingProfileId, setLoadingProfileId] = useState<string | null>(null)
 
   // Query all users from database
   const { data: usersList = [], isLoading: dataLoading } = useQuery<UserRow[]>({
@@ -97,45 +118,158 @@ export default function AdminUsersPage() {
     }
   }
 
+  // Handle View Profile
+  const handleViewUserProfile = async (targetUser: UserRow) => {
+    setLoadingProfileId(targetUser.id)
+    setActionError("")
+
+    try {
+      if (targetUser.role === "talent") {
+        // Query talent profile
+        const { data: profile, error: pError } = await supabase
+          .from("talent_profiles")
+          .select("*")
+          .eq("user_id", targetUser.id)
+          .maybeSingle()
+
+        if (pError) throw pError
+        if (!profile) {
+          setActionError(`No talent profile found for ${targetUser.email}. User has not completed onboarding.`)
+          return
+        }
+
+        // Query media
+        const { data: media } = await supabase
+          .from("media_assets")
+          .select("*")
+          .eq("owner_id", targetUser.id)
+
+        // Query category
+        let catName = ""
+        let subCatName = undefined
+        if (profile.category_id) {
+          const { data: cat } = await supabase
+            .from("categories")
+            .select("name")
+            .eq("id", profile.category_id)
+            .single()
+          catName = cat?.name || ""
+        }
+        if (profile.sub_category_id) {
+          const { data: subCat } = await supabase
+            .from("categories")
+            .select("name")
+            .eq("id", profile.sub_category_id)
+            .single()
+          subCatName = subCat?.name
+        }
+
+        setSelectedTalent({
+          ...profile,
+          users: {
+            email: targetUser.email,
+            phone: targetUser.phone,
+            status: targetUser.status
+          }
+        })
+        setTalentMedia(media || [])
+        setTalentCategoryName(catName)
+        setTalentSubCategoryName(subCatName)
+        setIsTalentModalOpen(true)
+      } else if (targetUser.role === "producer_brand" || targetUser.role === "casting_director") {
+        // Query producer profile
+        const { data: profile, error: pError } = await supabase
+          .from("producer_profiles")
+          .select("*")
+          .eq("user_id", targetUser.id)
+          .maybeSingle()
+
+        if (pError) throw pError
+        if (!profile) {
+          setActionError(`No producer profile found for ${targetUser.email}. User has not completed onboarding.`)
+          return
+        }
+
+        setSelectedProducer({
+          ...profile,
+          users: {
+            email: targetUser.email,
+            phone: targetUser.phone,
+            role: targetUser.role
+          }
+        })
+        setIsProducerModalOpen(true)
+      } else {
+        setActionError(`User has role "${targetUser.role.replace(/_/g, " ")}", which does not have an extended public profile dossier.`)
+      }
+    } catch (err: any) {
+      setActionError(err.message || "Failed to load user profile.")
+    } finally {
+      setLoadingProfileId(null)
+    }
+  }
+
   // Filtered list
   const filteredUsers = usersList.filter((u) => {
-    const matchesSearch = u.email.toLowerCase().includes(searchQuery.toLowerCase()) || u.id.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesRole = roleFilter === "all" || u.role === roleFilter
-    const matchesStatus = statusFilter === "all" || u.status === statusFilter
-
-    return matchesSearch && matchesRole && matchesStatus
+    // Role filter
+    if (roleFilter !== "all" && u.role !== roleFilter) return false
+    // Status filter
+    if (statusFilter !== "all" && u.status !== statusFilter) return false
+    // Search query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase()
+      const matchEmail = u.email.toLowerCase().includes(q)
+      const matchId = u.id.toLowerCase().includes(q)
+      if (!matchEmail && !matchId) return false
+    }
+    return true
   })
 
+  // Role Badge Helper
   const getRoleBadge = (role: string) => {
-    const roleConfig: Record<string, { label: string; style: string }> = {
-      super_admin: { label: "Super Admin", style: "bg-red-500/10 text-red-500 border border-red-500/20" },
-      studio_admin: { label: "Studio Admin", style: "bg-pink-500/10 text-pink-500 border border-pink-500/20" },
-      studio_staff: { label: "Studio Staff", style: "bg-purple-500/10 text-purple-500 border border-purple-500/20" },
-      talent: { label: "Talent / Artist", style: "bg-blue-500/10 text-blue-500 border border-blue-500/20" },
-      producer_brand: { label: "Producer / Brand", style: "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" },
-      casting_director: { label: "Casting Director", style: "bg-teal-500/10 text-teal-500 border border-teal-500/20" },
-      agent_manager: { label: "Agent Manager", style: "bg-cyan-500/10 text-cyan-500 border border-cyan-500/20" },
+    const roleStyles: Record<string, string> = {
+      super_admin: "bg-red-500/10 text-red-500 border-red-500/20",
+      studio_admin: "bg-purple-500/10 text-purple-500 border-purple-500/20",
+      studio_staff: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+      talent: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+      producer_brand: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+      casting_director: "bg-orange-500/10 text-orange-500 border-orange-500/20",
+      agent_manager: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20",
     }
 
-    const config = roleConfig[role] || { label: role, style: "bg-muted text-muted-foreground" }
     return (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${config.style}`}>
-        {config.label}
+      <span
+        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+          roleStyles[role] || "bg-muted text-muted-foreground border-border"
+        }`}
+      >
+        {role.replace(/_/g, " ")}
       </span>
     )
   }
 
+  // Status Badge Helper
   const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { label: string; style: string }> = {
-      active: { label: "Active", style: "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" },
-      suspended: { label: "Suspended", style: "bg-red-500/10 text-red-500 border border-red-500/20" },
-      deleted: { label: "Deleted", style: "bg-neutral-800 text-neutral-400 border border-neutral-700" },
+    if (status === "active") {
+      return (
+        <span className="inline-flex items-center gap-1 text-emerald-500 text-xs font-semibold">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          Active
+        </span>
+      )
     }
-
-    const config = statusConfig[status] || { label: status, style: "bg-muted text-muted-foreground" }
+    if (status === "suspended") {
+      return (
+        <span className="inline-flex items-center gap-1 text-destructive text-xs font-semibold">
+          <span className="h-1.5 w-1.5 rounded-full bg-destructive" />
+          Suspended
+        </span>
+      )
+    }
     return (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${config.style}`}>
-        {config.label}
+      <span className="inline-flex items-center gap-1 text-muted-foreground text-xs font-semibold">
+        <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
+        {status}
       </span>
     )
   }
@@ -148,7 +282,7 @@ export default function AdminUsersPage() {
         <div className="flex h-[50vh] w-full items-center justify-center">
           <div className="flex flex-col items-center gap-2">
             <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
-            <p className="text-xs text-muted-foreground">Loading users list...</p>
+            <p className="text-xs text-muted-foreground">Loading users database...</p>
           </div>
         </div>
       </DashboardShell>
@@ -159,30 +293,33 @@ export default function AdminUsersPage() {
     <DashboardShell role="admin">
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center gap-2.5">
-          <Users className="h-8 w-8 text-brand-500" />
-          <div>
-            <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
-              User Management
-            </h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              Configure system roles, suspend/reactivate accounts, and manage platform permissions.
-            </p>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <Users className="h-8 w-8 text-brand-500" />
+            <div>
+              <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
+                User Directory & Access Control
+              </h1>
+              <p className="text-muted-foreground text-sm mt-1">
+                View complete user profiles, inspect uploaded portfolios, manage roles, and account statuses.
+              </p>
+            </div>
           </div>
         </div>
 
+        {/* Action Alert Messages */}
         {actionError && (
           <div className="p-4 bg-destructive/10 text-destructive text-sm rounded-xl border border-destructive/20 flex items-start gap-2 animate-in fade-in-50">
             <AlertCircle className="h-5 w-5 shrink-0" />
             <div>
-              <p className="font-semibold">Action Failed</p>
+              <p className="font-semibold">Notice</p>
               <p className="text-xs mt-0.5">{actionError}</p>
             </div>
           </div>
         )}
 
         {actionSuccess && (
-          <div className="p-4 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm rounded-xl border border-emerald-500/20 flex items-start gap-2 animate-in fade-in-50">
+          <div className="p-4 bg-emerald-500/10 text-emerald-500 text-sm rounded-xl border border-emerald-500/20 flex items-start gap-2 animate-in fade-in-50">
             <CheckCircle2 className="h-5 w-5 shrink-0" />
             <div>
               <p className="font-semibold">Success</p>
@@ -191,9 +328,10 @@ export default function AdminUsersPage() {
           </div>
         )}
 
-        {/* Toolbar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-2">
+        {/* Filter Controls & Search */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-card/40 border border-border/60 p-4 rounded-2xl backdrop-blur-md">
+          {/* Filter dropdowns */}
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
             {/* Role Filter dropdown */}
             <select
               value={roleFilter}
@@ -265,7 +403,9 @@ export default function AdminUsersPage() {
                       day: "numeric",
                     })
                     const isProcessing = actionLoadingId === u.id
+                    const isProfileLoading = loadingProfileId === u.id
                     const isDeleted = u.status === "deleted"
+                    const hasInspectableProfile = ["talent", "producer_brand", "casting_director"].includes(u.role)
 
                     return (
                       <tr key={u.id} className="hover:bg-card/10 transition-colors group">
@@ -276,7 +416,7 @@ export default function AdminUsersPage() {
                               {u.email}
                             </span>
                             <span className="text-[10px] text-muted-foreground mt-0.5 font-mono">
-                              ID: {u.id}
+                              ID: {u.id} {u.phone ? `• ${u.phone}` : ""}
                             </span>
                           </div>
                         </td>
@@ -319,6 +459,25 @@ export default function AdminUsersPage() {
                         {/* Actions */}
                         <td className="p-4 text-right">
                           <div className="flex items-center justify-end gap-2">
+                            {/* View Full Profile button */}
+                            {hasInspectableProfile && !isDeleted && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleViewUserProfile(u)}
+                                disabled={isProfileLoading}
+                                className="text-xs font-semibold h-8 rounded-lg border-brand-500/30 text-brand-500 hover:bg-brand-500/10 cursor-pointer"
+                              >
+                                {isProfileLoading ? (
+                                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                ) : (
+                                  <>
+                                    <Eye className="h-3.5 w-3.5 mr-1" /> View Profile
+                                  </>
+                                )}
+                              </Button>
+                            )}
+
                             {isProcessing ? (
                               <Loader2 className="h-5 w-5 animate-spin text-brand-500" />
                             ) : isDeleted ? (
@@ -347,6 +506,29 @@ export default function AdminUsersPage() {
             </div>
           )}
         </div>
+
+        {/* Talent Full Profile Modal */}
+        <TalentFullProfileModal
+          isOpen={isTalentModalOpen && !!selectedTalent}
+          talent={selectedTalent}
+          mediaAssets={talentMedia}
+          categoryName={talentCategoryName}
+          subCategoryName={talentSubCategoryName}
+          onClose={() => {
+            setIsTalentModalOpen(false)
+            setSelectedTalent(null)
+          }}
+        />
+
+        {/* Producer Full Profile Modal */}
+        <ProducerFullProfileModal
+          isOpen={isProducerModalOpen && !!selectedProducer}
+          producer={selectedProducer}
+          onClose={() => {
+            setIsProducerModalOpen(false)
+            setSelectedProducer(null)
+          }}
+        />
       </div>
     </DashboardShell>
   )
