@@ -179,6 +179,10 @@ export function OnboardingStep2({ onNext, onBack, initialData }: Step2Props) {
             <Loader2 className="h-4 w-4 animate-spin text-brand-500" />
             Loading categories...
           </div>
+        ) : parentCategories.length === 0 ? (
+          <div className="p-4 rounded-xl border border-dashed border-border/80 bg-background/20 text-center text-xs text-muted-foreground">
+            No categories available at the moment. Please refresh the page.
+          </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {parentCategories.map(cat => {
