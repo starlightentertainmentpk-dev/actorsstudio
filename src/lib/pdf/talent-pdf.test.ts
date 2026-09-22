@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { renderToBuffer } from '@react-pdf/renderer'
 import { TalentOverviewPDF } from './TalentOverviewPDF'
 import { TalentFullProfilePDF } from './TalentFullProfilePDF'
+import { CompCardPDF } from './CompCard'
 import React from 'react'
 
 describe('Talent PDF Generation', () => {
@@ -84,6 +85,16 @@ describe('Talent PDF Generation', () => {
   it('renders Option 2: Full Profile multi-page PDF to a valid buffer', async () => {
     const buffer = await renderToBuffer(
       React.createElement(TalentFullProfilePDF, { talent: mockTalent }) as any
+    )
+    expect(buffer).toBeDefined()
+    expect(buffer.length).toBeGreaterThan(1000)
+    const header = buffer.subarray(0, 5).toString('utf-8')
+    expect(header).toBe('%PDF-')
+  })
+
+  it('renders Comp Card landscape PDF to a valid buffer without DataView errors', async () => {
+    const buffer = await renderToBuffer(
+      React.createElement(CompCardPDF, { talent: mockTalent }) as any
     )
     expect(buffer).toBeDefined()
     expect(buffer.length).toBeGreaterThan(1000)

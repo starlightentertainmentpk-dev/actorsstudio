@@ -1,35 +1,33 @@
-import { Document, Page, View, Text, Image, StyleSheet, Font } from '@react-pdf/renderer'
-
-// Register Inter font for the PDF generator
-Font.register({
-  family: 'Inter',
-  src: 'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2'
-})
+import { Document, Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
-  page: { flexDirection: 'row', backgroundColor: '#09090b', padding: 0 },
+  page: { flexDirection: 'row', backgroundColor: '#09090b', padding: 0, fontFamily: 'Helvetica' },
   photoColumn: { width: '40%', backgroundColor: '#1a1a1a' },
   photo: { width: '100%', height: '100%', objectFit: 'cover' },
-  contentColumn: { width: '60%', padding: 32, backgroundColor: '#09090b', color: '#ffffff', fontFamily: 'Inter' },
-  name: { fontSize: 26, fontWeight: 700, color: '#ffffff', marginBottom: 4 },
-  category: { fontSize: 11, color: '#d946ef', marginBottom: 20, textTransform: 'uppercase', letterSpacing: 2 },
-  statTable: { borderTopWidth: 1, borderTopColor: '#27272a', borderBottomWidth: 1, borderBottomColor: '#27272a', py: 12, mb: 16 },
+  contentColumn: { width: '60%', padding: 32, backgroundColor: '#09090b', color: '#ffffff', fontFamily: 'Helvetica' },
+  name: { fontSize: 24, fontFamily: 'Helvetica-Bold', color: '#ffffff', marginBottom: 4 },
+  category: { fontSize: 10, color: '#d946ef', marginBottom: 16, textTransform: 'uppercase', letterSpacing: 2, fontFamily: 'Helvetica-Bold' },
+  statTable: { borderTopWidth: 1, borderTopColor: '#27272a', borderBottomWidth: 1, borderBottomColor: '#27272a', paddingVertical: 12, marginBottom: 16 },
   statRow: { flexDirection: 'row', marginBottom: 6 },
-  statLabel: { fontSize: 8, color: '#71717a', width: 90, textTransform: 'uppercase', letterSpacing: 0.5 },
+  statLabel: { fontSize: 8, color: '#71717a', width: 90, textTransform: 'uppercase', letterSpacing: 0.5, fontFamily: 'Helvetica-Bold' },
   statValue: { fontSize: 9, color: '#e4e4e7', flex: 1 },
-  sectionTitle: { fontSize: 8, color: '#d946ef', textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 6, marginTop: 12, fontWeight: 700 },
+  sectionTitle: { fontSize: 8, color: '#d946ef', textTransform: 'uppercase', letterSpacing: 1.5, marginBottom: 6, marginTop: 10, fontFamily: 'Helvetica-Bold' },
   bioText: { fontSize: 9, color: '#a1a1aa', lineHeight: 1.5 },
   skillsContainer: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 4 },
   skillTag: { backgroundColor: '#27272a', borderRadius: 4, paddingHorizontal: 6, paddingVertical: 3, marginRight: 4, marginBottom: 4 },
   skillText: { fontSize: 8, color: '#e4e4e7' },
   footer: { position: 'absolute', bottom: 20, left: 32, right: 32, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   footerText: { fontSize: 8, color: '#52525b' },
-  logoText: { fontSize: 9, color: '#d946ef', fontWeight: 700 },
+  logoText: { fontSize: 9, color: '#d946ef', fontFamily: 'Helvetica-Bold' },
 })
 
 export function CompCardPDF({ talent }: { talent: any }) {
   const displayName = talent.stage_name || talent.full_name
-  const primaryPhoto = talent.media_assets?.find((m: any) => m.is_primary && m.type === 'photo')?.url
+  const primaryPhoto =
+    talent.media_assets?.find((m: any) => m.is_primary && m.type === 'photo')?.url ||
+    talent.media_assets?.find((m: any) => m.type === 'photo')?.url ||
+    talent.avatar_url ||
+    null
   const categoryDisplay = talent.category_name || talent.categories?.name || 'Talent'
   const subCategoryDisplay = talent.sub_category_name || talent.sub_category?.name
 
