@@ -363,18 +363,22 @@ export default function ProducerCastingCallsPage() {
                         )}
                       </td>
 
-                      {/* Applications count */}
+                      {/* Applications count & Screen CTA */}
                       <td className="p-4 text-center">
                         <Link href={`/producer/applications?callId=${call.id}`}>
-                          <span className="inline-flex items-center gap-1 cursor-pointer font-bold text-brand-500 hover:underline px-3 py-1 bg-brand-500/5 hover:bg-brand-500/10 rounded-full text-xs">
-                            <Users className="h-3.5 w-3.5" /> {call.applications_count}
-                          </span>
+                          <Button
+                            size="sm"
+                            className="h-8 text-xs font-bold rounded-lg bg-brand-500/10 hover:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 cursor-pointer shadow-xs gap-1.5"
+                          >
+                            <Users className="h-3.5 w-3.5" />
+                            <span>Screen ({call.applications_count})</span>
+                          </Button>
                         </Link>
                       </td>
 
                       {/* Actions */}
                       <td className="p-4 text-right">
-                        <div className="flex items-center justify-end gap-2.5">
+                        <div className="flex items-center justify-end gap-1.5">
                           {isProcessing ? (
                             <Loader2 className="h-4 w-4 animate-spin text-brand-500" />
                           ) : (

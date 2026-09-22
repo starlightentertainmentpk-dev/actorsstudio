@@ -45,18 +45,37 @@ export function CastingApplyButton({
     })
   }
 
-  // Case 1: Guest
+  // Case 1: Guest (Non-registered or not logged in)
   if (!userRole) {
     return (
-      <div className="space-y-2">
-        <a href="/auth/login" className="block w-full">
-          <Button className="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold h-12 rounded-xl shadow-md shadow-brand-500/10 cursor-pointer">
-            Log in to Apply
-          </Button>
-        </a>
-        <p className="text-[10px] text-muted-foreground text-center">
-          You must be logged in as a Talent to submit an application.
-        </p>
+      <div className="space-y-3 bg-brand-500/[0.03] border border-brand-500/20 p-4 rounded-2xl text-center">
+        <div className="space-y-1">
+          <p className="text-xs font-bold text-foreground">Talent Application Gate</p>
+          <p className="text-[11px] text-muted-foreground leading-relaxed">
+            This audition is publicly visible. Only registered talent with a profile portfolio can apply.
+          </p>
+        </div>
+        <div className="space-y-2 pt-1">
+          <a
+            href={`/auth/login?next=/casting/${castingCallId}`}
+            className="block w-full"
+          >
+            <Button className="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold h-11 rounded-xl shadow-md shadow-brand-500/10 cursor-pointer text-xs">
+              Log in to Apply
+            </Button>
+          </a>
+          <a
+            href={`/auth/register?role=talent&next=/casting/${castingCallId}`}
+            className="block w-full"
+          >
+            <Button
+              variant="outline"
+              className="w-full border-border/80 text-foreground font-semibold h-9 rounded-xl hover:bg-muted text-xs cursor-pointer"
+            >
+              Register as Talent (Free)
+            </Button>
+          </a>
+        </div>
       </div>
     )
   }

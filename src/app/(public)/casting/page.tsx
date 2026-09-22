@@ -93,9 +93,32 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
       }
     }
 
-    // Category slug filter
+    // Category / Discipline filter
     if (resolvedSearchParams.category) {
-      if (call.categories?.slug !== resolvedSearchParams.category) {
+      const catQuery = resolvedSearchParams.category.toLowerCase()
+      const callSlug = (call.categories?.slug || "").toLowerCase()
+      const callName = (call.categories?.name || "").toLowerCase()
+      const callTitle = (call.title || "").toLowerCase()
+
+      const matchesActor = (catQuery === "actor" || catQuery === "actors") &&
+        (callSlug.includes("actor") || callName.includes("actor") || callTitle.includes("actor") || callTitle.includes("actress") || callTitle.includes("acting"))
+
+      const matchesModel = (catQuery === "model" || catQuery === "models") &&
+        (callSlug.includes("model") || callName.includes("model") || callTitle.includes("model") || callTitle.includes("modeling"))
+
+      const matchesSinger = (catQuery === "singer" || catQuery === "singers" || catQuery === "musician") &&
+        (callSlug.includes("music") || callSlug.includes("sing") || callName.includes("music") || callName.includes("sing") || callTitle.includes("sing") || callTitle.includes("vocal") || callTitle.includes("music"))
+
+      const matchesVoice = (catQuery === "voice" || catQuery === "voice-artist" || catQuery === "voice-artists") &&
+        (callSlug.includes("voice") || callName.includes("voice") || callSlug.includes("dubbing") || callTitle.includes("voice") || callTitle.includes("dubbing"))
+
+      const matchesDancer = (catQuery === "dancer" || catQuery === "dancers") &&
+        (callSlug.includes("danc") || callName.includes("danc") || callTitle.includes("danc"))
+
+      const isDisciplineMatch = matchesActor || matchesModel || matchesSinger || matchesVoice || matchesDancer
+      const isExactSlugMatch = callSlug === catQuery || callSlug.startsWith(catQuery)
+
+      if (!isDisciplineMatch && !isExactSlugMatch) {
         return false
       }
     }
@@ -174,14 +197,54 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
           {/* Header Hero Section */}
           <div className="space-y-4 max-w-3xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-bold">
-              <Sparkles className="h-3.5 w-3.5" /> Core Content Feed
+              <Sparkles className="h-3.5 w-3.5" /> Public Audition Board
             </div>
             <h1 className="text-3xl md:text-5xl font-extrabold font-heading text-foreground tracking-tight leading-tight">
               Casting Calls & Auditions
             </h1>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-              Find verified casting updates for dramas, commercials, movies, and theatre projects. Apply securely with your talent profile portfolio.
+              Find verified casting updates for dramas, commercials, films, fashion, and music videos. Open for everyone to browse — register as talent to apply.
             </p>
+          </div>
+
+          {/* Quick Discipline Filter Bar */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {[
+              { label: "All Castings", slug: "", icon: "🌟" },
+              { label: "Actors", slug: "actor", icon: "🎭" },
+              { label: "Models", slug: "model", icon: "✨" },
+              { label: "Singers", slug: "singer", icon: "🎤" },
+              { label: "Voice Artists", slug: "voice-artist", icon: "🎙️" },
+              { label: "Dancers", slug: "dancer", icon: "💃" },
+            ].map((tab) => {
+              const currentCategory = (resolvedSearchParams.category || "").toLowerCase()
+              const isActive = (!tab.slug && !currentCategory) || (tab.slug && currentCategory === tab.slug)
+              
+              const params = new URLSearchParams()
+              if (resolvedSearchParams.location) params.set("location", resolvedSearchParams.location)
+              if (tab.slug) params.set("category", tab.slug)
+              if (resolvedSearchParams.gender) params.set("gender", resolvedSearchParams.gender)
+              if (resolvedSearchParams.compensation) params.set("compensation", resolvedSearchParams.compensation)
+              if (resolvedSearchParams.deadline) params.set("deadline", resolvedSearchParams.deadline)
+
+              const queryStr = params.toString()
+              const href = `/casting${queryStr ? `?${queryStr}` : ""}`
+
+              return (
+                <Link
+                  key={tab.label}
+                  href={href}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer ${
+                    isActive
+                      ? "bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-500/20"
+                      : "bg-card/70 text-muted-foreground border-border/50 hover:border-brand-500/30 hover:text-foreground hover:bg-card"
+                  }`}
+                >
+                  <span className="text-sm">{tab.icon}</span>
+                  <span>{tab.label}</span>
+                </Link>
+              )
+            })}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">

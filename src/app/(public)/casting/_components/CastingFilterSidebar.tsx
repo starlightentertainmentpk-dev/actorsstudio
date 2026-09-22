@@ -99,7 +99,16 @@ export function CastingFilterSidebar({ categories }: CastingFilterSidebarProps) 
             className="w-full h-9 px-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
           >
             <option value="">All Categories</option>
-            {categories.map((cat) => (
+            {(categories && categories.length > 0
+              ? categories
+              : [
+                  { id: "cat-actor", name: "Actor / Actress", slug: "actor" },
+                  { id: "cat-model", name: "Model", slug: "model" },
+                  { id: "cat-singer", name: "Singer / Musician", slug: "singer" },
+                  { id: "cat-voice", name: "Voice Artist", slug: "voice-artist" },
+                  { id: "cat-dancer", name: "Dancer", slug: "dancer" },
+                ]
+            ).map((cat) => (
               <option key={cat.id} value={cat.slug}>
                 {cat.name}
               </option>
