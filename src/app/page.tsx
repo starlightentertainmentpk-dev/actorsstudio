@@ -45,62 +45,87 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Smoke Test: Color Palette Swatches */}
-        <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 border-t border-border/20 max-w-4xl">
-          <div className="bg-card border border-border/40 rounded-xl p-6 sm:p-8 shadow-sm">
-            <h2 className="font-heading text-2xl font-bold mb-3 text-foreground">
-              Scaffold Smoke-Test Swatches
+        {/* How It Works Section */}
+        <section id="how-it-works" className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 border-t border-border/20 max-w-6xl">
+          <div className="text-center space-y-3 max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-500">Simple 3-Step Process</span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-foreground">
+              How Actor&apos;s Studio Works
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Use this section to verify that the custom design token color configurations are resolving correctly in the Tailwind compiler.
+            <p className="text-sm text-muted-foreground">
+              Whether you are an artist seeking your big break or a director casting your next production, we make it effortless.
             </p>
+          </div>
 
-            <div className="space-y-6">
-              {/* Brand Swatch */}
-              <div>
-                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                  Brand Palette (Fuchsia Accent)
-                </h3>
-                <div className="grid grid-cols-11 gap-1">
-                  <div className="h-10 rounded bg-brand-50" title="brand-50" />
-                  <div className="h-10 rounded bg-brand-100" title="brand-100" />
-                  <div className="h-10 rounded bg-brand-200" title="brand-200" />
-                  <div className="h-10 rounded bg-brand-300" title="brand-300" />
-                  <div className="h-10 rounded bg-brand-400" title="brand-400" />
-                  <div className="h-10 rounded bg-brand-500" title="brand-500" />
-                  <div className="h-10 rounded bg-brand-600" title="brand-600" />
-                  <div className="h-10 rounded bg-brand-700" title="brand-700" />
-                  <div className="h-10 rounded bg-brand-800" title="brand-800" />
-                  <div className="h-10 rounded bg-brand-900" title="brand-900" />
-                  <div className="h-10 rounded bg-brand-950" title="brand-950" />
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-card border border-border/40 p-8 rounded-2xl space-y-4 hover:border-brand-500/40 transition-all shadow-sm">
+              <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-bold flex items-center justify-center text-lg">
+                01
               </div>
-
-              {/* Gold Accent Swatch */}
-              <div>
-                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                  Gold Accent Palette (Prestige Feel)
-                </h3>
-                <div className="grid grid-cols-3 gap-2 max-w-xs">
-                  <div className="h-10 rounded bg-gold-400 flex items-center justify-center text-[10px] text-black font-semibold">400</div>
-                  <div className="h-10 rounded bg-gold-500 flex items-center justify-center text-[10px] text-white font-semibold">500</div>
-                  <div className="h-10 rounded bg-gold-600 flex items-center justify-center text-[10px] text-white font-semibold">600</div>
-                </div>
-              </div>
-
-              {/* Surface Swatch */}
-              <div>
-                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-2">
-                  Surface Neutrals (Dark Mode / Light Mode Bases)
-                </h3>
-                <div className="grid grid-cols-4 gap-2 max-w-md">
-                  <div className="h-10 rounded bg-surface-50 border border-border flex items-center justify-center text-[10px] text-black font-semibold">50</div>
-                  <div className="h-10 rounded bg-surface-100 border border-border flex items-center justify-center text-[10px] text-black font-semibold">100</div>
-                  <div className="h-10 rounded bg-surface-900 flex items-center justify-center text-[10px] text-white font-semibold">900</div>
-                  <div className="h-10 rounded bg-surface-950 flex items-center justify-center text-[10px] text-white font-semibold">950</div>
-                </div>
-              </div>
+              <h3 className="text-lg font-bold text-foreground">Build Digital Portfolio</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Add your verified headshots, video reels, voice demos, and measurements. Generate print-ready PDF Comp Cards and 1-page dossiers with one click.
+              </p>
             </div>
+
+            <div className="bg-card border border-border/40 p-8 rounded-2xl space-y-4 hover:border-brand-500/40 transition-all shadow-sm">
+              <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-bold flex items-center justify-center text-lg">
+                02
+              </div>
+              <h3 className="text-lg font-bold text-foreground">Discover &amp; 1-Click Apply</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Explore real-time casting calls across TV commercials, dramas, films, and theatre. Filter by discipline, location, and compensation.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border/40 p-8 rounded-2xl space-y-4 hover:border-brand-500/40 transition-all shadow-sm">
+              <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 font-bold flex items-center justify-center text-lg">
+                03
+              </div>
+              <h3 className="text-lg font-bold text-foreground">Screen, Audition &amp; Book</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Directors screen applicants in an Indeed-style ATS workspace, schedule in-person or video auditions, and finalize bookings securely.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <Link href="/about">
+              <Button variant="outline" className="border-border hover:bg-muted font-semibold text-xs rounded-xl px-6 cursor-pointer">
+                Explore Full Platform Guide &amp; Details <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+              </Button>
+            </Link>
+          </div>
+        </section>
+
+        {/* Disciplines Section */}
+        <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 border-t border-border/20 max-w-6xl">
+          <div className="text-center space-y-2 mb-8">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-500">Explore by Talent Category</span>
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
+              Cast Across Every Creative Discipline
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { label: "Actors", slug: "actor", icon: "🎭", sub: "Dramas, Films & Ads" },
+              { label: "Models", slug: "model", icon: "✨", sub: "Fashion & Runway" },
+              { label: "Singers", slug: "singer", icon: "🎤", sub: "Vocalists & Bands" },
+              { label: "Voice Artists", slug: "voice-artist", icon: "🎙️", sub: "Dubbing & Radio" },
+              { label: "Dancers", slug: "dancer", icon: "💃", sub: "Performers & Classical" },
+              { label: "Child Artists", slug: "child-artist", icon: "⭐", sub: "Young Talents" },
+            ].map((cat) => (
+              <Link
+                key={cat.label}
+                href={`/casting?category=${cat.slug}`}
+                className="bg-card border border-border/40 p-4 rounded-2xl text-center space-y-1.5 hover:border-brand-500/40 transition-all hover:shadow-md group cursor-pointer"
+              >
+                <span className="text-3xl block group-hover:scale-110 transition-transform">{cat.icon}</span>
+                <h4 className="font-bold text-xs text-foreground group-hover:text-brand-500 transition-colors">{cat.label}</h4>
+                <p className="text-[10px] text-muted-foreground">{cat.sub}</p>
+              </Link>
+            ))}
           </div>
         </section>
 
