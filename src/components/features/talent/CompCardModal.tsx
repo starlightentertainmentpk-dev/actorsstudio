@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { createClient } from "@/lib/supabase/client"
-import { X, Sparkles, MapPin, Calendar, Award, User } from "lucide-react"
+import { X, Sparkles, MapPin, Calendar, Award, User, Printer } from "lucide-react"
 
 interface CompCardModalProps {
   isOpen: boolean
@@ -84,17 +84,35 @@ export function CompCardModal({ isOpen, onClose, profile, primaryPhotoUrl }: Com
       <div className="relative w-full max-w-4xl bg-card border border-border/80 rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
         
         {/* Header toolbar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border/40 bg-card/60 backdrop-blur-sm sticky top-0 z-10">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border/40 bg-card/60 backdrop-blur-sm sticky top-0 z-10 flex-wrap gap-2">
           <div className="flex items-center gap-2">
             <Award className="h-5 w-5 text-brand-500" />
             <span className="font-heading font-semibold text-lg text-foreground">Digital Comp Card Preview</span>
           </div>
-          <button 
-            onClick={onClose} 
-            className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-          >
-            <X className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href={`/api/talent/${profile.slug || profile.id}/pdf?type=overview`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-card hover:bg-muted text-foreground border border-border text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+            >
+              <Printer className="h-3.5 w-3.5 text-brand-500" /> Print Overview & Bio
+            </a>
+            <a
+              href={`/api/talent/${profile.slug || profile.id}/pdf?type=full`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+            >
+              <Printer className="h-3.5 w-3.5" /> Print Full Profile
+            </a>
+            <button 
+              onClick={onClose} 
+              className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer ml-1"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
         {/* Comp Card Grid Content */}

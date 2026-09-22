@@ -21,7 +21,9 @@ import {
   Play, 
   Share2,
   Video,
-  Check
+  Check,
+  FileDown,
+  FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -44,6 +46,7 @@ export default function TalentPortfolioView({ talent }: TalentPortfolioViewProps
   const [enquiryForm, setEnquiryForm] = useState({ name: "", email: "", message: "" })
   const [enquirySubmitted, setEnquirySubmitted] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
+  const [printMenuOpen, setPrintMenuOpen] = useState(false)
 
   const displayName = talent.stage_name || talent.full_name
   const primaryPhoto = talent.media_assets?.find((m: any) => m.is_primary && m.type === "photo")?.url
@@ -257,13 +260,63 @@ export default function TalentPortfolioView({ talent }: TalentPortfolioViewProps
               Book / Enquire Profile
             </Button>
             
-            <a 
-              href={`/api/talent/${talent.slug}/comp-card`}
-              download
-              className="hidden md:inline-flex shrink-0 items-center justify-center rounded-xl border border-border bg-background hover:bg-muted text-foreground px-5 text-sm font-semibold transition-all shadow-sm cursor-pointer hover:border-brand-500/35 hover:text-brand-500"
-            >
-              <Printer className="h-4 w-4 mr-2" /> Print Comp Card
-            </a>
+            {/* Print Options Dropdown Menu */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setPrintMenuOpen(!printMenuOpen)}
+                className="hidden md:inline-flex shrink-0 items-center justify-center rounded-xl border border-border bg-background hover:bg-muted text-foreground px-5 py-3 text-sm font-semibold transition-all shadow-sm cursor-pointer hover:border-brand-500/35 hover:text-brand-500 gap-2"
+              >
+                <Printer className="h-4 w-4" />
+                <span>Print Profile</span>
+                <ChevronDown className={`h-3.5 w-3.5 transition-transform ${printMenuOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {printMenuOpen && (
+                <div 
+                  className="absolute right-0 mt-2 w-64 rounded-2xl bg-card border border-border shadow-2xl py-2 z-30 animate-in fade-in-50 zoom-in-95 duration-150"
+                  onClick={() => setPrintMenuOpen(false)}
+                >
+                  <a
+                    href={`/api/talent/${talent.slug}/pdf?type=overview`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors cursor-pointer"
+                  >
+                    <FileText className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-bold">1. Print Overview & Bio</p>
+                      <p className="text-[10px] text-muted-foreground">Formatted 1-page summary PDF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`/api/talent/${talent.slug}/pdf?type=full`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors border-t border-border/40 cursor-pointer"
+                  >
+                    <FileDown className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-bold">2. Print Full Profile</p>
+                      <p className="text-[10px] text-muted-foreground">Full dossier with portfolio gallery PDF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`/api/talent/${talent.slug}/comp-card`}
+                    download
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors border-t border-border/40 cursor-pointer"
+                  >
+                    <Award className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-semibold">Print Comp Card</p>
+                      <p className="text-[10px] text-muted-foreground">Landscape composite card PDF</p>
+                    </div>
+                  </a>
+                </div>
+              )}
+            </div>
 
             <button 
               onClick={handleShare}

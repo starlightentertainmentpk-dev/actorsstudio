@@ -28,7 +28,10 @@ import {
   Clock,
   ShieldCheck,
   Play,
-  Briefcase
+  Briefcase,
+  Printer,
+  FileDown,
+  ChevronDown
 } from "lucide-react"
 import type { Database } from "@/types/database"
 
@@ -90,6 +93,7 @@ export function TalentFullProfileModal({
   const [activeTab, setActiveTab] = useState<"overview" | "photos" | "media" | "social" | "specs">("overview")
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [printMenuOpen, setPrintMenuOpen] = useState(false)
 
   // Rejection feedback state
   const [isRejecting, setIsRejecting] = useState(false)
@@ -202,16 +206,64 @@ export function TalentFullProfileModal({
                 <ExternalLink className="h-3.5 w-3.5 text-brand-500" /> Public Page
               </a>
             )}
-            {talent.slug && talent.verification_status === "approved" && (
-              <a
-                href={`/api/talent/${talent.slug}/comp-card`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500/10 text-brand-500 border border-brand-500/20 text-xs font-semibold hover:bg-brand-500/20 transition-colors"
+            {/* Print / PDF Export Menu */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setPrintMenuOpen(!printMenuOpen)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500 text-white text-xs font-semibold hover:bg-brand-600 transition-colors shadow-sm cursor-pointer"
               >
-                <Download className="h-3.5 w-3.5" /> Comp Card
-              </a>
-            )}
+                <Printer className="h-3.5 w-3.5" />
+                <span>Print / PDF</span>
+                <ChevronDown className={`h-3 w-3 transition-transform ${printMenuOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {printMenuOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-64 rounded-xl bg-card border border-border shadow-2xl py-1.5 z-30 animate-in fade-in-50 zoom-in-95 duration-150"
+                  onClick={() => setPrintMenuOpen(false)}
+                >
+                  <a
+                    href={`/api/talent/${talent.slug || talent.id}/pdf?type=overview`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors cursor-pointer"
+                  >
+                    <FileText className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-bold">1. Print Overview & Bio</p>
+                      <p className="text-[10px] text-muted-foreground">Formatted 1-page summary PDF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`/api/talent/${talent.slug || talent.id}/pdf?type=full`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors border-t border-border/40 cursor-pointer"
+                  >
+                    <FileDown className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-bold">2. Print Full Profile</p>
+                      <p className="text-[10px] text-muted-foreground">Full dossier with portfolio gallery PDF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href={`/api/talent/${talent.slug || talent.id}/pdf?type=comp_card`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-foreground hover:bg-brand-500/10 hover:text-brand-500 transition-colors border-t border-border/40 cursor-pointer"
+                  >
+                    <Award className="h-4 w-4 text-brand-500 shrink-0" />
+                    <div>
+                      <p className="font-semibold">Print Comp Card</p>
+                      <p className="text-[10px] text-muted-foreground">Landscape composite card PDF</p>
+                    </div>
+                  </a>
+                </div>
+              )}
+            </div>
             <button
               onClick={onClose}
               className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
@@ -420,6 +472,142 @@ export function TalentFullProfileModal({
                     ) : (
                       <span className="text-xs text-muted-foreground">No special skills listed</span>
                     )}
+                  </div>
+                </div>
+
+                {/* Physical Specs & Measurements in Overview & Bio Tab */}
+                <div className="pt-2 border-t border-border/40 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                      <Ruler className="h-3.5 w-3.5 text-brand-500" />
+                      Physical Specs & Measurements
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1">
+                        <Ruler className="h-3 w-3 text-brand-500" /> Height
+                      </span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">{formatHeight(talent.height_cm)}</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1">
+                        <Scale className="h-3 w-3 text-brand-500" /> Weight
+                      </span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">{formatWeight(talent.weight_kg)}</p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Chest / Bust</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">
+                        {measurements.chest || measurements.bust ? `${measurements.chest || measurements.bust}"` : "—"}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Waist</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">
+                        {measurements.waist ? `${measurements.waist}"` : "—"}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Hips</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">
+                        {measurements.hip || measurements.hips ? `${measurements.hip || measurements.hips}"` : "—"}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Eye Color</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5 capitalize">
+                        {measurements.eye_color || measurements.eyes || "—"}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Hair Color</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5 capitalize">
+                        {measurements.hair_color || measurements.hair || "—"}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-xl bg-background/50 border border-border">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground">Shoe Size</span>
+                      <p className="text-xs font-bold text-foreground mt-0.5">
+                        {measurements.shoe_size || measurements.shoes || "—"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social Profiles in Overview & Bio Tab */}
+                <div className="pt-2 border-t border-border/40 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                      <Globe className="h-3.5 w-3.5 text-brand-500" />
+                      Social Profiles & Online Presence
+                    </h3>
+                  </div>
+                  {socialLinks.length === 0 ? (
+                    <div className="p-3.5 rounded-xl bg-muted/20 border border-dashed border-border text-xs text-muted-foreground italic flex items-center gap-2">
+                      <Globe className="h-4 w-4 text-muted-foreground/60" />
+                      No social profiles added yet.
+                    </div>
+                  ) : (
+                    <div className="grid sm:grid-cols-2 gap-2.5">
+                      {socialLinks.map((item) => {
+                        const Icon = item.icon
+                        return (
+                          <div key={item.label} className="p-2.5 rounded-xl bg-card/60 border border-border flex items-center justify-between gap-2.5">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${item.color}`}>
+                                <Icon className="h-4 w-4" />
+                              </div>
+                              <div className="min-w-0">
+                                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block">{item.label}</span>
+                                <p className="text-xs font-medium text-foreground truncate">{item.url}</p>
+                              </div>
+                            </div>
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-border text-[11px] font-semibold text-foreground hover:bg-muted shrink-0 transition-colors"
+                            >
+                              Visit <ExternalLink className="h-3 w-3" />
+                            </a>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* Dedicated 2 Printing Options Action Bar in Overview & Bio */}
+                <div className="p-4 rounded-2xl bg-brand-500/5 border border-brand-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                      <Printer className="h-4 w-4 text-brand-500" />
+                      Export Profile PDF Options
+                    </span>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                      Generate official formatted PDFs for casting and archival.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <a
+                      href={`/api/talent/${talent.slug || talent.id}/pdf?type=overview`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-card hover:bg-muted text-foreground border border-border text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                    >
+                      <FileText className="h-3.5 w-3.5 text-brand-500" />
+                      Print Overview & Bio
+                    </a>
+                    <a
+                      href={`/api/talent/${talent.slug || talent.id}/pdf?type=full`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold transition-colors shadow-sm cursor-pointer"
+                    >
+                      <FileDown className="h-3.5 w-3.5" />
+                      Print Full Profile (PDF)
+                    </a>
                   </div>
                 </div>
               </div>
