@@ -329,14 +329,14 @@ export default function AdminUsersPage() {
         )}
 
         {/* Filter Controls & Search */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-card/40 border border-border/60 p-4 rounded-2xl backdrop-blur-md">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 bg-card border border-border/50 p-3.5 rounded-xl shadow-xs">
           {/* Filter dropdowns */}
-          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
             {/* Role Filter dropdown */}
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className="h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+              className="h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium"
             >
               <option value="all">All Roles</option>
               <option value="super_admin">Super Admins</option>
@@ -351,7 +351,7 @@ export default function AdminUsersPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+              className="h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium"
             >
               <option value="all">All Statuses</option>
               <option value="active">Active</option>
@@ -362,19 +362,19 @@ export default function AdminUsersPage() {
 
           {/* Search bar */}
           <div className="relative w-full md:max-w-xs">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by Email or User ID..."
-              className="w-full pl-9 pr-4 py-2 border border-input rounded-xl bg-background/50 text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all"
+              className="w-full h-9 pl-9 pr-3 border border-border/60 rounded-lg bg-background text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
             />
           </div>
         </div>
 
         {/* Users Table */}
-        <div className="bg-card/20 border border-border/40 rounded-2xl overflow-hidden backdrop-blur-sm shadow-xl">
+        <div className="bg-card border border-border/50 rounded-xl overflow-hidden shadow-xs">
           {filteredUsers.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
               <ShieldAlert className="h-10 w-10 text-brand-500 bg-brand-500/10 p-2 rounded-full mb-3" />
@@ -387,15 +387,15 @@ export default function AdminUsersPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-border/50 bg-card/40 text-muted-foreground font-semibold">
-                    <th className="p-4">User Details</th>
-                    <th className="p-4">Role Badge</th>
-                    <th className="p-4">Active Status</th>
-                    <th className="p-4">Created At</th>
-                    <th className="p-4 text-right">Actions</th>
+                  <tr className="border-b border-border/50 bg-muted/30 text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+                    <th className="py-3 px-4">User Details</th>
+                    <th className="py-3 px-4">Role Badge</th>
+                    <th className="py-3 px-4">Active Status</th>
+                    <th className="py-3 px-4">Created At</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/30">
+                <tbody className="divide-y divide-border/40">
                   {filteredUsers.map((u) => {
                     const formattedDate = new Date(u.created_at).toLocaleDateString(undefined, {
                       year: "numeric",
@@ -408,7 +408,7 @@ export default function AdminUsersPage() {
                     const hasInspectableProfile = ["talent", "producer_brand", "casting_director"].includes(u.role)
 
                     return (
-                      <tr key={u.id} className="hover:bg-card/10 transition-colors group">
+                      <tr key={u.id} className="hover:bg-muted/40 transition-colors group">
                         {/* User Details */}
                         <td className="p-4">
                           <div className="flex flex-col">

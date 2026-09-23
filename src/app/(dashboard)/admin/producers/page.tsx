@@ -215,39 +215,42 @@ export default function AdminProducersPage() {
           </div>
         )}
 
-        {/* Filter Controls & Search */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-card/40 border border-border/60 p-3 rounded-2xl backdrop-blur-md">
+        {/* Action Controls & Filters */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-card border border-border/50 p-3.5 rounded-xl shadow-xs">
           {/* Tabs */}
-          <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto">
+          <div className="inline-flex p-1 bg-muted/50 rounded-xl border border-border/50 w-full sm:w-auto overflow-x-auto">
             <button
               onClick={() => setActiveTab("all")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "all"
-                  ? "bg-brand-500 text-white shadow-sm"
-                  : "bg-muted/40 text-muted-foreground hover:text-foreground"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              All ({allProducers.length})
+              All
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-muted font-bold">{allProducers.length}</span>
             </button>
             <button
               onClick={() => setActiveTab("pending")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "pending"
-                  ? "bg-amber-500 text-white shadow-sm"
-                  : "bg-muted/40 text-muted-foreground hover:text-foreground"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Pending Approval ({pendingCount})
+              Pending Approval
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${pendingCount > 0 ? "bg-amber-500/15 text-amber-600 dark:text-amber-400" : "bg-muted"}`}>{pendingCount}</span>
             </button>
             <button
               onClick={() => setActiveTab("verified")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "verified"
-                  ? "bg-emerald-600 text-white shadow-sm"
-                  : "bg-muted/40 text-muted-foreground hover:text-foreground"
+                  ? "bg-background text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              Verified / Approved ({verifiedCount})
+              Verified / Approved
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-muted font-bold">{verifiedCount}</span>
             </button>
           </div>
 
@@ -259,13 +262,13 @@ export default function AdminProducersPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search company, type, email..."
-              className="w-full h-8 pl-9 pr-3 rounded-lg border border-input bg-background/50 text-xs focus:outline-none focus:ring-1 focus:ring-brand-500"
+              className="w-full h-9 pl-9 pr-3 rounded-lg border border-border/60 bg-background text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
             />
           </div>
         </div>
 
         {/* Table/Queue List */}
-        <div className="bg-card/20 border border-border/40 rounded-2xl overflow-hidden backdrop-blur-sm shadow-xl">
+        <div className="bg-card border border-border/50 rounded-xl overflow-hidden shadow-xs">
           {filteredProducers.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
               <Check className="h-10 w-10 text-emerald-500 bg-emerald-500/10 p-2 rounded-full mb-3" />
@@ -278,16 +281,16 @@ export default function AdminProducersPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-border/50 bg-card/40 text-muted-foreground font-semibold text-xs">
-                    <th className="p-4">Company & Identity</th>
-                    <th className="p-4">Type</th>
-                    <th className="p-4">Status</th>
-                    <th className="p-4">Submitted</th>
-                    <th className="p-4 text-center">Docs</th>
-                    <th className="p-4 text-right">Actions</th>
+                  <tr className="border-b border-border/50 bg-muted/30 text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+                    <th className="py-3 px-4">Company & Identity</th>
+                    <th className="py-3 px-4">Type</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4">Submitted</th>
+                    <th className="py-3 px-4 text-center">Docs</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/30">
+                <tbody className="divide-y divide-border/40">
                   {filteredProducers.map((producer) => {
                     const email = producer.users?.email || "No email linked"
                     const formattedDate = new Date(producer.created_at).toLocaleDateString(
@@ -303,7 +306,7 @@ export default function AdminProducersPage() {
                     return (
                       <tr
                         key={producer.id}
-                        className="hover:bg-card/10 transition-colors group"
+                        className="hover:bg-muted/40 transition-colors group"
                       >
                         {/* Company Details */}
                         <td className="p-4">

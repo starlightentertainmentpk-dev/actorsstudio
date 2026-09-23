@@ -60,7 +60,7 @@ function SortablePhotoCard({ photo, onSetPrimary, onDelete }: { photo: any, onSe
     <div 
       ref={setNodeRef} 
       style={style} 
-      className="relative group aspect-[3/4] rounded-2xl overflow-hidden border border-border/80 bg-muted/30 shadow-sm hover:shadow-md transition-shadow"
+      className="relative group aspect-[3/4] rounded-xl overflow-hidden border border-border/50 bg-muted/30 shadow-xs hover:shadow-md hover:border-border transition-all"
     >
       <img src={photo.url} alt="Portfolio asset" className="w-full h-full object-cover" />
       
@@ -603,10 +603,10 @@ export default function TalentMediaPage() {
                   />
                 ))}
                 {photos.length === 0 && (
-                  <div className="col-span-full border-2 border-dashed border-border/80 rounded-2xl p-12 text-center text-muted-foreground">
-                    <Upload className="h-10 w-10 mx-auto stroke-1 text-muted-foreground/60 mb-2" />
-                    <p className="font-semibold text-sm">No headshots uploaded yet</p>
-                    <p className="text-xs mt-1">Upload up to 20 images. The first one will represent your comp card.</p>
+                  <div className="col-span-full border-2 border-dashed border-border/60 rounded-xl p-10 text-center text-muted-foreground bg-muted/10">
+                    <Upload className="h-9 w-9 mx-auto stroke-1 text-muted-foreground/60 mb-2" />
+                    <p className="font-semibold text-sm text-foreground">No headshots uploaded yet</p>
+                    <p className="text-xs text-muted-foreground mt-1">Upload up to 20 images. The first one will represent your comp card.</p>
                   </div>
                 )}
               </div>
@@ -631,13 +631,13 @@ export default function TalentMediaPage() {
 
             <div className="space-y-3">
               {videos.map(video => (
-                <div key={video.id} className="bg-card/25 border border-border/40 p-4 rounded-2xl flex items-center justify-between gap-4 hover:border-brand-500/30 transition-all">
+                <div key={video.id} className="bg-card border border-border/50 p-3.5 rounded-xl shadow-xs flex items-center justify-between gap-4 hover:border-border hover:shadow-sm transition-all">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center">
-                      <Video className="h-5 w-5" />
+                    <div className="h-9 w-9 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0">
+                      <Video className="h-4.5 w-4.5" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-foreground truncate max-w-[200px]">
+                      <p className="text-xs font-bold text-foreground truncate max-w-[200px]">
                         {(video.metadata_json as any)?.title || "Reel / Showreel"}
                       </p>
                       <span className="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded capitalize">
@@ -645,7 +645,7 @@ export default function TalentMediaPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <a href={video.url} target="_blank" rel="noreferrer" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
                       <ExternalLink className="h-4 w-4" />
                     </a>
@@ -678,13 +678,13 @@ export default function TalentMediaPage() {
 
             <div className="space-y-3">
               {voiceSamples.map(audio => (
-                <div key={audio.id} className="bg-card/25 border border-border/40 p-4 rounded-2xl space-y-3 hover:border-brand-500/30 transition-all">
+                <div key={audio.id} className="bg-card border border-border/50 p-3.5 rounded-xl shadow-xs space-y-3 hover:border-border hover:shadow-sm transition-all">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center">
+                      <div className="h-9 w-9 rounded-lg bg-brand-500/10 text-brand-500 flex items-center justify-center shrink-0">
                         <Music className="h-4.5 w-4.5" />
                       </div>
-                      <p className="text-xs font-semibold text-foreground truncate max-w-[200px]">
+                      <p className="text-xs font-bold text-foreground truncate max-w-[200px]">
                         {(audio.metadata_json as any)?.title || "Audio sample.mp3"}
                       </p>
                     </div>
@@ -707,14 +707,14 @@ export default function TalentMediaPage() {
           {/* Section: Resume & CV */}
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-foreground">Resume / CV</h2>
-            <div className="bg-card/25 border border-border/40 p-5 rounded-2xl space-y-4">
+            <div className="bg-card border border-border/50 p-4 rounded-xl shadow-xs space-y-3">
               {resumes.length > 0 ? (
                 resumes.map(r => (
                   <div key={r.id} className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <FileText className="h-8 w-8 text-brand-500 shrink-0" />
+                      <FileText className="h-7 w-7 text-brand-500 shrink-0" />
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-foreground truncate max-w-[180px]">
+                        <p className="text-xs font-bold text-foreground truncate max-w-[180px]">
                           {(r.metadata_json as any)?.title || "My Resume"}
                         </p>
                         <p className="text-[10px] text-muted-foreground">

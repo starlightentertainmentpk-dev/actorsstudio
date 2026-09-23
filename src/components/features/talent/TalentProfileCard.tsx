@@ -82,16 +82,15 @@ export function TalentProfileCard({ talent, mode = "public", isVerified = false 
 
   // Premium card styling classes
   const premiumCardClasses = talent.is_premium
-    ? "border-amber-400/40 shadow-[0_0_20px_rgba(251,191,36,0.08)] dark:border-amber-500/30 hover:border-amber-500/60"
+    ? "border-amber-400/40 shadow-xs dark:border-amber-500/30 hover:border-amber-500/60 hover:shadow-lg hover:shadow-amber-500/5"
     : "border-border/60 hover:border-brand-500/50 hover:shadow-xl hover:shadow-brand-500/5"
 
   return (
     <Link href={`/talent/${talent.slug}`}>
       <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-        className={`group relative flex flex-col h-full bg-card border rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${premiumCardClasses}`}
+        whileHover={{ y: -3 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        className={`group relative flex flex-col h-full bg-card border rounded-2xl overflow-hidden transition-all duration-200 cursor-pointer ${premiumCardClasses}`}
       >
         {/* Profile Headshot thumbnail */}
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted">
@@ -99,11 +98,11 @@ export function TalentProfileCard({ talent, mode = "public", isVerified = false 
             <img
               src={talent.primary_photo_url}
               alt={displayName}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
             />
           ) : (
             <div className="h-full w-full flex flex-col items-center justify-center text-muted-foreground bg-brand-500/5">
-              <span className="text-3xl font-extrabold text-brand-500">
+              <span className="text-3xl font-extrabold text-brand-600 dark:text-brand-400 font-heading">
                 {displayName[0].toUpperCase()}
               </span>
               <span className="text-[10px] text-muted-foreground mt-1">No Headshot</span>
@@ -112,8 +111,8 @@ export function TalentProfileCard({ talent, mode = "public", isVerified = false 
 
           {/* Premium gold star badge */}
           {talent.is_premium && (
-            <div className="absolute top-3 right-3 flex items-center justify-center h-7 w-7 rounded-full bg-amber-500 text-white shadow-md border border-amber-400/20 z-10">
-              <Star className="h-4 w-4 fill-white" />
+            <div className="absolute top-3 right-3 flex items-center justify-center h-6 w-6 rounded-full bg-amber-500 text-white shadow-sm border border-amber-400/30 z-10">
+              <Star className="h-3.5 w-3.5 fill-white" />
             </div>
           )}
 
@@ -143,7 +142,7 @@ export function TalentProfileCard({ talent, mode = "public", isVerified = false 
         {/* Card info content */}
         <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
           <div className="space-y-1">
-            <h3 className="font-heading font-bold text-base text-foreground group-hover:text-brand-500 transition-colors line-clamp-1">
+            <h3 className="font-heading font-bold text-sm text-foreground group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">
               {displayName}
             </h3>
             

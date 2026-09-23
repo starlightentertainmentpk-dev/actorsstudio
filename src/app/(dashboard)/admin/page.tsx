@@ -4,6 +4,9 @@ import { useRequireAuth } from "@/hooks/useRequireAuth"
 import { DashboardShell } from "@/components/shared/DashboardShell"
 import { createClient } from "@/lib/supabase/client"
 import { useQuery } from "@tanstack/react-query"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import Link from "next/link"
 import {
   Users,
@@ -11,9 +14,9 @@ import {
   Layers,
   Tv,
   ArrowRight,
-  Clock,
-  Loader2,
-  AlertCircle
+  ShieldAlert,
+  Sliders,
+  CheckCircle2,
 } from "lucide-react"
 
 export default function AdminDashboardPage() {
@@ -54,9 +57,13 @@ export default function AdminDashboardPage() {
   if (authLoading || !user) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-2">
-          <Loader2 className="h-8 w-8 animate-spin rounded-full border-2 border-brand-500 border-t-transparent" />
-          <p className="text-xs text-muted-foreground">Loading your dashboard...</p>
+        <div className="space-y-4 w-full max-w-md p-6">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-4 w-full" />
+          <div className="grid grid-cols-2 gap-4 mt-6">
+            <Skeleton className="h-28 rounded-2xl" />
+            <Skeleton className="h-28 rounded-2xl" />
+          </div>
         </div>
       </div>
     )
@@ -65,39 +72,47 @@ export default function AdminDashboardPage() {
   const stats = [
     {
       title: "Pending Talent Queue",
-      description: "Approve newly registered talent profiles",
+      description: "Review identity and credential documents for registered artists",
       count: pendingTalentCount,
       loading: talentCountLoading,
       href: "/admin/talent",
       icon: Users,
-      color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+      badgeText: pendingTalentCount > 0 ? `${pendingTalentCount} Pending` : "All Clear",
+      badgeVariant: pendingTalentCount > 0 ? ("warning" as const) : ("success" as const),
+      color: "text-amber-600 dark:text-amber-400 bg-amber-500/10 border-amber-500/20",
       cta: "Review Talent",
     },
     {
-      title: "Producer Queue",
-      description: "Verify business credentials for producers",
+      title: "Producer Verifications",
+      description: "Validate enterprise production entities and business licenses",
       count: pendingProducerCount,
       loading: producerCountLoading,
       href: "/admin/producers",
       icon: ShieldCheck,
-      color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
+      badgeText: pendingProducerCount > 0 ? `${pendingProducerCount} Pending` : "All Clear",
+      badgeVariant: pendingProducerCount > 0 ? ("warning" as const) : ("success" as const),
+      color: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
       cta: "Verify Producers",
     },
     {
-      title: "Categories",
-      description: "Manage talent classification taxonomy",
+      title: "Category Taxonomy",
+      description: "Manage acting, modeling, voice-over, and craft classifications",
       href: "/admin/categories",
       icon: Layers,
-      color: "text-blue-500 bg-blue-500/10 border-blue-500/20",
+      badgeText: "Taxonomy",
+      badgeVariant: "purple" as const,
+      color: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
       cta: "Manage Categories",
     },
     {
-      title: "Casting Calls",
-      description: "Review platform casting submissions",
+      title: "Casting Calls Directory",
+      description: "Audit public projects, roles, and compliance requirements",
       href: "/admin/casting",
       icon: Tv,
-      color: "text-purple-500 bg-purple-500/10 border-purple-500/20",
-      cta: "View Casting",
+      badgeText: "Moderation",
+      badgeVariant: "cyan" as const,
+      color: "text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
+      cta: "Moderate Casting",
     },
   ]
 
@@ -105,61 +120,93 @@ export default function AdminDashboardPage() {
     <DashboardShell role="admin">
       <div className="space-y-8">
         {/* Welcome Banner */}
-        <div>
-          <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
-            Admin Portal
-          </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Welcome back, {user.email.split("@")[0]} • Role: {user.role}
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h1 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                Administration Hub
+              </h1>
+              <Badge variant="purple" size="sm" className="font-semibold uppercase tracking-wider">
+                {user.role?.replace("_", " ")}
+              </Badge>
+            </div>
+            <p className="text-muted-foreground text-xs sm:text-sm mt-1">
+              Platform governance, identity verifications, and marketplace compliance.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+            <span>Operational • Logged in as <strong>{user.email}</strong></span>
+          </div>
         </div>
 
-        {/* Informational Message */}
-        <div className="border border-border/40 bg-card/20 rounded-2xl p-6 backdrop-blur-sm">
-          <p className="text-sm text-foreground/80 leading-relaxed">
-            This is the administration dashboard. Here you can configure user accounts, approve pending talent profiles, review platform submissions, and check analytics.
-          </p>
-        </div>
+        {/* Informational Guidelines Card */}
+        <Card className="border-border/60 bg-muted/20">
+          <CardContent className="p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="p-2.5 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 shrink-0">
+              <ShieldAlert className="h-5 w-5" />
+            </div>
+            <div className="text-xs sm:text-sm space-y-1">
+              <p className="font-semibold text-foreground">
+                Marketplace Trust & Safety Policy
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                All talent portfolios and production houses must pass document authentication before gaining public discovery and contact privileges.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Stats Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Stats & Navigation Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {stats.map((item) => {
             const Icon = item.icon
             return (
               <Link
                 key={item.title}
                 href={item.href}
-                className="group relative flex flex-col justify-between p-6 bg-card/25 hover:bg-card/45 border border-border/40 hover:border-brand-500/30 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 cursor-pointer overflow-hidden"
+                className="group block cursor-pointer"
               >
-                {/* Background glow on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-500/0 via-brand-500/0 to-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="space-y-4 relative z-10">
-                  <div className={`p-2.5 rounded-xl border w-fit ${item.color}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground text-base tracking-tight">{item.title}</h3>
-                    <p className="text-muted-foreground text-xs mt-1 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+                <Card hover className="h-full flex flex-col justify-between p-5 border-border/70 group-hover:border-brand-500/40">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className={`p-2.5 rounded-xl border ${item.color}`}>
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <Badge variant={item.badgeVariant} size="sm">
+                        {item.badgeText}
+                      </Badge>
+                    </div>
 
-                <div className="mt-6 pt-4 border-t border-border/30 flex items-center justify-between relative z-10">
-                  {item.loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                  ) : item.count !== undefined ? (
-                    <span className="text-2xl font-black text-foreground font-heading">
-                      {item.count}
+                    <div>
+                      <h3 className="font-heading font-bold text-foreground text-base tracking-tight group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground text-xs mt-1.5 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between">
+                    {item.loading ? (
+                      <Skeleton className="h-7 w-12" />
+                    ) : item.count !== undefined ? (
+                      <div className="font-heading text-2xl font-black text-foreground">
+                        {item.count}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
+                        <Sliders className="h-3.5 w-3.5" /> Configure
+                      </span>
+                    )}
+
+                    <span className="text-xs text-brand-600 dark:text-brand-400 font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      {item.cta} <ArrowRight className="h-3.5 w-3.5" />
                     </span>
-                  ) : (
-                    <span className="text-xs text-muted-foreground font-medium">Manage</span>
-                  )}
-                  <span className="text-xs text-brand-500 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
-                    {item.cta} <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </div>
+                  </div>
+                </Card>
               </Link>
             )
           })}

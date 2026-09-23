@@ -18,7 +18,8 @@ import {
   CheckCircle,
   Loader2,
   AlertTriangle,
-  Users
+  Users,
+  Check
 } from "lucide-react"
 
 type Category = {
@@ -212,29 +213,27 @@ export default function TalentCastingPage() {
       </div>
 
       {/* Tab Controls: All Calls vs My Applications */}
-      <div className="flex items-center gap-1.5 border-b border-border/40 pb-3">
+      <div className="flex items-center gap-1 p-1 rounded-xl bg-muted/60 border border-border/50 w-fit">
         <button
           onClick={() => setActiveTab("all")}
-          className={`px-4 py-2 text-xs font-bold rounded-lg capitalize transition-colors cursor-pointer shrink-0 ${
+          className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
             activeTab === "all"
-              ? "bg-brand-500 text-white shadow-md shadow-brand-500/10"
-              : "text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+              ? "bg-card text-foreground shadow-xs border border-border/40 font-bold"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           All Casting Calls
         </button>
         <button
           onClick={() => setActiveTab("applied")}
-          className={`px-4 py-2 text-xs font-bold rounded-lg capitalize transition-colors cursor-pointer shrink-0 flex items-center gap-1.5 ${
+          className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "applied"
-              ? "bg-brand-500 text-white shadow-md shadow-brand-500/10"
-              : "text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+              ? "bg-card text-foreground shadow-xs border border-border/40 font-bold"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          My Submissions
-          <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-            activeTab === "applied" ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
-          }`}>
+          <span>My Submissions</span>
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 font-bold">
             {appMap.size}
           </span>
         </button>
@@ -245,15 +244,15 @@ export default function TalentCastingPage() {
         
         {/* Filters Sidebar */}
         <div className="lg:col-span-1 space-y-4">
-          <div className="bg-card/25 backdrop-blur-md border border-border/40 p-5 rounded-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-border/40 pb-2">
-              <h3 className="font-bold text-foreground text-sm flex items-center gap-1.5">
+          <div className="bg-card border border-border/50 p-5 rounded-xl space-y-4 shadow-xs">
+            <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
+              <h3 className="font-heading font-bold text-foreground text-sm flex items-center gap-1.5">
                 <Filter className="h-4 w-4 text-brand-500" /> Filters
               </h3>
               {(searchQuery || filterLocation || filterCategory || filterGender || filterCompensation) && (
                 <button
                   onClick={handleClearFilters}
-                  className="text-[10px] font-bold text-brand-500 hover:text-brand-600 cursor-pointer"
+                  className="text-[11px] font-semibold text-brand-500 hover:text-brand-600 cursor-pointer"
                 >
                   Clear All
                 </button>
@@ -354,11 +353,13 @@ export default function TalentCastingPage() {
         {/* Listing Grid */}
         <div className="lg:col-span-3 space-y-4">
           {filteredCalls.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground text-center bg-card/20 border border-border/40 rounded-2xl shadow-sm">
-              <Tv className="h-12 w-12 text-muted-foreground/45 mb-3" />
-              <p className="text-base font-bold text-foreground">No casting calls found</p>
-              <p className="text-xs mt-1 text-muted-foreground/80 max-w-xs">
-                We couldn't find any casting calls matching your active filters or tab selection.
+            <div className="flex flex-col items-center justify-center py-16 px-6 text-center rounded-xl border border-border/50 bg-card/40 backdrop-blur-xs">
+              <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-3 ring-4 ring-brand-500/5">
+                <Tv className="h-6 w-6" />
+              </div>
+              <p className="text-base font-semibold text-foreground font-heading">No casting calls found</p>
+              <p className="text-xs mt-1 text-muted-foreground max-w-xs leading-relaxed">
+                We couldn&apos;t find any casting calls matching your active filters or tab selection.
               </p>
             </div>
           ) : (
@@ -380,15 +381,15 @@ export default function TalentCastingPage() {
                 const getInlineTimeline = (status: string) => {
                   switch (status) {
                     case "applied":
-                      return "Applied ➔ Shortlist (Pending)"
+                      return "Applied • Shortlist Pending"
                     case "shortlisted":
-                      return "Shortlisted 🟡 ➔ Audition (Pending)"
+                      return "Shortlisted • Audition Pending"
                     case "audition":
-                      return "Audition Scheduled 🟣"
+                      return "Audition Scheduled"
                     case "selected":
-                      return "Selected 🎉 Selected!"
+                      return "Selected for Role"
                     case "rejected":
-                      return "Closed (Rejected)"
+                      return "Application Closed"
                     default:
                       return ""
                   }
@@ -397,7 +398,7 @@ export default function TalentCastingPage() {
                 return (
                   <div
                     key={call.id}
-                    className="bg-card/25 border border-border/40 hover:border-brand-500/30 p-5 rounded-2xl transition-all shadow-sm flex flex-col justify-between group"
+                    className="bg-card border border-border/50 hover:border-border hover:shadow-md p-5 rounded-xl transition-all shadow-xs flex flex-col justify-between group"
                   >
                     <div>
                       {/* Header badges */}
@@ -407,14 +408,15 @@ export default function TalentCastingPage() {
                         </span>
 
                         {app ? (
-                          <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${
+                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border inline-flex items-center gap-1 ${
                             app.status === "selected"
                               ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
                               : app.status === "shortlisted"
                               ? "bg-amber-500/15 text-amber-600 border-amber-500/20"
                               : "bg-blue-500/15 text-blue-600 border-blue-500/20"
                           }`}>
-                            Applied ✓
+                            <Check className="h-3 w-3 stroke-[2.5]" />
+                            <span>Applied</span>
                           </span>
                         ) : (
                           daysLeft !== null && daysLeft <= 3 && daysLeft > 0 && (
@@ -501,9 +503,10 @@ export default function TalentCastingPage() {
                           <Button
                             disabled
                             size="sm"
-                            className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 font-bold text-xs px-3.5 py-1.5 rounded-lg cursor-not-allowed"
+                            className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold text-xs px-3.5 py-1.5 rounded-lg cursor-not-allowed inline-flex items-center gap-1.5"
                           >
-                            Applied ✓
+                            <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                            <span>Applied</span>
                           </Button>
                         ) : (
                           <Button

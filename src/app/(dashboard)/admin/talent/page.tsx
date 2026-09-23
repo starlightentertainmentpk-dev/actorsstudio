@@ -278,16 +278,16 @@ export default function AdminTalentPage() {
         )}
 
         {/* Filter Toolbar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-card border border-border/50 p-3.5 rounded-xl shadow-xs">
           {/* Status Tabs */}
-          <div className="flex bg-muted/40 border border-border/30 rounded-xl p-1 w-fit overflow-x-auto">
+          <div className="inline-flex p-1 bg-muted/50 rounded-xl border border-border/50 w-full md:w-auto overflow-x-auto">
             {(["all", "pending", "under_review", "approved", "rejected"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all capitalize whitespace-nowrap cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all capitalize whitespace-nowrap cursor-pointer ${
                   activeTab === tab
-                    ? "bg-brand-500 text-white shadow-md shadow-brand-500/10"
+                    ? "bg-background text-foreground shadow-xs"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -298,19 +298,19 @@ export default function AdminTalentPage() {
 
           {/* Search bar */}
           <div className="relative w-full md:max-w-xs">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search talent profiles..."
-              className="w-full pl-9 pr-4 py-2 border border-input rounded-xl bg-background/50 text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all"
+              className="w-full h-9 pl-9 pr-3 border border-border/60 rounded-lg bg-background text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
             />
           </div>
         </div>
 
         {/* Talent List Table */}
-        <div className="bg-card/20 border border-border/40 rounded-2xl overflow-hidden backdrop-blur-sm shadow-xl">
+        <div className="bg-card border border-border/50 rounded-xl overflow-hidden shadow-xs">
           {filteredQueue.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
               <Clock className="h-10 w-10 text-brand-500 bg-brand-500/10 p-2 rounded-full mb-3" />
@@ -323,16 +323,16 @@ export default function AdminTalentPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-border/50 bg-card/40 text-muted-foreground font-semibold">
-                    <th className="p-4">Talent Name</th>
-                    <th className="p-4">Category</th>
-                    <th className="p-4">Experience</th>
-                    <th className="p-4">Age / Gender</th>
-                    <th className="p-4">Status</th>
-                    <th className="p-4 text-right">Actions</th>
+                  <tr className="border-b border-border/50 bg-muted/30 text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+                    <th className="py-3 px-4">Talent Name</th>
+                    <th className="py-3 px-4">Category</th>
+                    <th className="py-3 px-4">Experience</th>
+                    <th className="py-3 px-4">Age / Gender</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/30">
+                <tbody className="divide-y divide-border/40">
                   {filteredQueue.map((talent) => {
                     const email = talent.users?.email || "No email"
                     const mainCat = getCategoryName(talent.category_id)
@@ -343,7 +343,7 @@ export default function AdminTalentPage() {
                     return (
                       <tr
                         key={talent.id}
-                        className="hover:bg-card/10 transition-colors group cursor-pointer"
+                        className="hover:bg-muted/40 transition-colors group cursor-pointer"
                         onClick={() => {
                           setSelectedTalent(talent)
                           setIsInspectorOpen(true)

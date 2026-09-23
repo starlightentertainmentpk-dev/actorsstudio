@@ -181,7 +181,14 @@ export default function AdminCastingCallsPage() {
                     : "text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                 }`}
               >
-                {tab === "flagged" ? "⚠️ Flagged" : tab}
+                {tab === "flagged" ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <Flag className="h-3.5 w-3.5" />
+                    <span>Flagged</span>
+                  </span>
+                ) : (
+                  tab
+                )}
               </button>
             ))}
           </div>

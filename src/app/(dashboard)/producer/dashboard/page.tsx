@@ -5,9 +5,12 @@ import { useQuery } from "@tanstack/react-query"
 import { createClient } from "@/lib/supabase/client"
 import { VerifiedBadge } from "@/components/features/producer/VerifiedBadge"
 import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { EmptyState } from "@/components/ui/empty-state"
+import { Skeleton } from "@/components/ui/skeleton"
 import Link from "next/link"
 import {
-  Loader2,
   AlertTriangle,
   Plus,
   Search,
@@ -18,6 +21,9 @@ import {
   Clock,
   ArrowRight,
   TrendingUp,
+  Building2,
+  Globe,
+  ExternalLink,
 } from "lucide-react"
 
 export default function ProducerDashboardPage() {
@@ -142,10 +148,27 @@ export default function ProducerDashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-[50vh] w-full items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
-          <p className="text-xs text-muted-foreground">Loading dashboard overview...</p>
+      <div className="space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-64" />
+            <Skeleton className="h-4 w-96" />
+          </div>
+          <div className="flex gap-3">
+            <Skeleton className="h-10 w-32" />
+            <Skeleton className="h-10 w-40" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-28 rounded-2xl" />
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <Skeleton className="lg:col-span-2 h-80 rounded-2xl" />
+          <Skeleton className="h-80 rounded-2xl" />
         </div>
       </div>
     )
@@ -153,9 +176,13 @@ export default function ProducerDashboardPage() {
 
   if (!profile) {
     return (
-      <div className="flex h-[50vh] w-full items-center justify-center">
-        <p className="text-sm text-muted-foreground">Profile details not found.</p>
-      </div>
+      <EmptyState
+        icon={Building2}
+        title="Producer profile not found"
+        description="We couldn't retrieve your producer profile. Please complete your registration or contact support."
+        actionLabel="Complete Onboarding"
+        actionHref="/producer/onboarding"
+      />
     )
   }
 
@@ -169,46 +196,80 @@ export default function ProducerDashboardPage() {
 
   const isVerified = profile.verified
 
+  const statCards = [
+    {
+      label: "Active Casting Calls",
+      value: activeCallsCount,
+      icon: Tv,
+      subtext: "Published & accepting applications",
+      iconColor: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
+    },
+    {
+      label: "Applications Received",
+      value: totalApplications,
+      icon: Users,
+      subtext: "Across all active calls",
+      iconColor: "text-purple-600 dark:text-purple-400 bg-purple-500/10 border-purple-500/20",
+    },
+    {
+      label: "Shortlisted Talent",
+      value: shortlistedApplications,
+      icon: CheckSquare,
+      subtext: "Passed initial screening",
+      iconColor: "text-brand-600 dark:text-brand-400 bg-brand-500/10 border-brand-500/20",
+    },
+    {
+      label: "Auditions Scheduled",
+      value: auditionsScheduled,
+      icon: Calendar,
+      subtext: "Live or video auditions",
+      iconColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+    },
+  ]
+
   return (
     <div className="space-y-6">
       {/* Title Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               {profile.company_name}
             </h1>
             <VerifiedBadge verified={isVerified} />
           </div>
-          <p className="text-muted-foreground text-sm mt-1">
-            Dashboard overview of your casting activities.
+          <p className="text-muted-foreground text-xs sm:text-sm mt-1">
+            Real-time management for your casting calls, applicant reviews, and auditions.
           </p>
         </div>
 
         {/* Quick Actions */}
         <div className="flex items-center gap-3">
           <Link href="/producer/talent-search">
-            <Button variant="outline" className="flex items-center gap-2 border-border/60 font-semibold cursor-pointer">
-              <Search className="h-4 w-4" /> Search Talent
+            <Button variant="outline" className="flex items-center gap-2 border-border/70 font-semibold cursor-pointer">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <span>Search Talent</span>
             </Button>
           </Link>
 
           {isVerified ? (
             <Link href="/producer/casting?create=true">
-              <Button className="bg-brand-500 hover:bg-brand-600 text-white font-semibold flex items-center gap-2 shadow-md shadow-brand-500/10 cursor-pointer">
-                <Plus className="h-4 w-4" /> New Casting Call
+              <Button className="bg-brand-600 hover:bg-brand-500 text-white font-semibold flex items-center gap-2 shadow-sm shadow-brand-500/20 cursor-pointer">
+                <Plus className="h-4 w-4" />
+                <span>New Casting Call</span>
               </Button>
             </Link>
           ) : (
             <div className="relative group">
               <Button
                 disabled
-                className="bg-brand-500/50 text-white/70 font-semibold flex items-center gap-2 cursor-not-allowed"
+                className="bg-brand-600/40 text-white/60 font-semibold flex items-center gap-2 cursor-not-allowed"
               >
-                <Plus className="h-4 w-4" /> New Casting Call
+                <Plus className="h-4 w-4" />
+                <span>New Casting Call</span>
               </Button>
-              <div className="absolute right-0 top-full mt-2 hidden group-hover:block bg-popover text-popover-foreground text-xs p-2 rounded-lg border border-border/80 shadow-md max-w-[200px] z-50">
-                You must be verified before you can post casting calls.
+              <div className="absolute right-0 top-full mt-2 hidden group-hover:block bg-popover text-popover-foreground text-xs p-2.5 rounded-xl border border-border shadow-lg max-w-[220px] z-50">
+                You must be verified by the admin team before you can post public casting calls.
               </div>
             </div>
           )}
@@ -217,12 +278,16 @@ export default function ProducerDashboardPage() {
 
       {/* Verification Banner */}
       {!isVerified && (
-        <div className="flex items-start gap-3 bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 p-4 rounded-xl">
-          <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <p className="font-semibold">Your company profile is under verification</p>
-            <p className="mt-0.5 text-xs text-amber-600/80 dark:text-amber-400/80">
-              You can search and browse talent profiles, but you cannot post casting calls or contact talent directly until verified by the administration.
+        <div className="rounded-xl border border-amber-500/25 bg-amber-500/5 p-4 flex items-start gap-3 text-xs sm:text-sm shadow-2xs">
+          <div className="p-2 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
+            <AlertTriangle className="h-4.5 w-4.5" />
+          </div>
+          <div>
+            <p className="font-semibold text-amber-800 dark:text-amber-200">
+              Company verification pending
+            </p>
+            <p className="mt-0.5 text-muted-foreground leading-relaxed text-xs">
+              You can browse and bookmark talent profiles freely. Direct casting call postings and messaging will be activated once your credentials are confirmed by our studio admin.
             </p>
           </div>
         </div>
@@ -230,80 +295,61 @@ export default function ProducerDashboardPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Active Calls */}
-        <div className="bg-card/40 backdrop-blur-sm border border-border/40 p-5 rounded-2xl flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 dark:text-blue-400">
-            <Tv className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Active Casting Calls
-            </p>
-            <p className="text-2xl font-bold text-foreground mt-0.5">{activeCallsCount}</p>
-          </div>
-        </div>
-
-        {/* Total Applications */}
-        <div className="bg-card/40 backdrop-blur-sm border border-border/40 p-5 rounded-2xl flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500 dark:text-purple-400">
-            <Users className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Applications Received
-            </p>
-            <p className="text-2xl font-bold text-foreground mt-0.5">{totalApplications}</p>
-          </div>
-        </div>
-
-        {/* Shortlisted Talent */}
-        <div className="bg-card/40 backdrop-blur-sm border border-border/40 p-5 rounded-2xl flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-500 dark:text-brand-400">
-            <CheckSquare className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Shortlisted Talent
-            </p>
-            <p className="text-2xl font-bold text-foreground mt-0.5">{shortlistedApplications}</p>
-          </div>
-        </div>
-
-        {/* Auditions Scheduled */}
-        <div className="bg-card/40 backdrop-blur-sm border border-border/40 p-5 rounded-2xl flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 dark:text-emerald-400">
-            <Calendar className="h-6 w-6" />
-          </div>
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Auditions Scheduled
-            </p>
-            <p className="text-2xl font-bold text-foreground mt-0.5">{auditionsScheduled}</p>
-          </div>
-        </div>
+        {statCards.map((stat) => {
+          const Icon = stat.icon
+          return (
+            <Card key={stat.label} hover className="p-5 flex flex-col justify-between">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  {stat.label}
+                </span>
+                <div className={`p-2 rounded-lg border ${stat.iconColor}`}>
+                  <Icon className="h-4 w-4" />
+                </div>
+              </div>
+              <div className="mt-4">
+                <div className="font-heading text-3xl font-extrabold tracking-tight tabular-nums text-foreground">
+                  {stat.value}
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-0.5">
+                  {stat.subtext}
+                </p>
+              </div>
+            </Card>
+          )
+        })}
       </div>
 
       {/* Main Section Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-card/20 border border-border/40 rounded-2xl p-6 backdrop-blur-sm flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-brand-500" /> Recent Activity
-              </h2>
-            </div>
-
-            {recentActivity.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-                <Clock className="h-8 w-8 text-muted-foreground/50 mb-2" />
-                <p className="text-sm">No recent activity detected.</p>
-                <p className="text-xs mt-0.5 text-muted-foreground/80">
-                  Applications will appear here when talent applies to your calls.
-                </p>
+        <Card className="lg:col-span-2 flex flex-col justify-between">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-brand-600 dark:text-brand-400" />
+                  Recent Activity
+                </CardTitle>
+                <CardDescription>
+                  Real-time updates on talent submissions and audition progress
+                </CardDescription>
               </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-3">
+            {recentActivity.length === 0 ? (
+              <EmptyState
+                icon={Clock}
+                title="No recent submissions yet"
+                description="When talent applies to your casting calls, their real-time application events will appear here."
+                actionLabel={isVerified ? "Post a Casting Call" : "Browse Talent"}
+                actionHref={isVerified ? "/producer/casting?create=true" : "/producer/talent-search"}
+                className="border-none bg-transparent py-8"
+              />
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-2.5">
                 {recentActivity.map((activity) => {
                   const talentName =
                     activity.talent_profiles?.stage_name ||
@@ -320,36 +366,38 @@ export default function ProducerDashboardPage() {
                     }
                   )
 
+                  const statusVariant =
+                    activity.status === "shortlisted"
+                      ? "success"
+                      : activity.status === "rejected"
+                      ? "destructive"
+                      : "default"
+
                   return (
                     <div
                       key={activity.id}
-                      className="flex items-start justify-between p-3.5 bg-background/40 border border-border/30 rounded-xl hover:border-brand-500/30 transition-colors"
+                      className="flex items-center justify-between p-3.5 bg-muted/30 hover:bg-muted/60 border border-border/40 rounded-xl transition-all"
                     >
-                      <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-foreground">
-                          {talentName}
-                        </span>
-                        <span className="text-xs text-muted-foreground mt-0.5">
-                          applied to{" "}
-                          <strong className="text-foreground/80 font-medium">
-                            {callTitle}
-                          </strong>
-                        </span>
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="h-9 w-9 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-xs shrink-0">
+                          {talentName.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="truncate">
+                          <p className="text-sm font-semibold text-foreground truncate">
+                            {talentName}
+                          </p>
+                          <p className="text-xs text-muted-foreground truncate">
+                            applied to <span className="font-medium text-foreground/80">{callTitle}</span>
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-1.5">
+
+                      <div className="flex flex-col items-end gap-1 shrink-0 ml-3">
+                        <Badge variant={statusVariant} size="sm" className="capitalize">
+                          {activity.status}
+                        </Badge>
                         <span className="text-[10px] text-muted-foreground">
                           {formattedDate}
-                        </span>
-                        <span
-                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize ${
-                            activity.status === "shortlisted"
-                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                              : activity.status === "rejected"
-                              ? "bg-red-500/10 text-red-600 dark:text-red-400"
-                              : "bg-blue-500/10 text-blue-600 dark:text-blue-400"
-                          }`}
-                        >
-                          {activity.status}
                         </span>
                       </div>
                     </div>
@@ -357,68 +405,85 @@ export default function ProducerDashboardPage() {
                 })}
               </div>
             )}
-          </div>
+          </CardContent>
 
           {recentActivity.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-border/40 text-right">
-              <Link href="/producer/applications" className="text-xs font-semibold text-brand-500 hover:text-brand-600 inline-flex items-center gap-1">
-                View All Applications <ArrowRight className="h-3.5 w-3.5" />
+            <CardFooter className="border-t border-border/40 pt-4 flex justify-end">
+              <Link
+                href="/producer/applications"
+                className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-500 inline-flex items-center gap-1.5 transition-colors"
+              >
+                <span>View All Applications</span>
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
-            </div>
+            </CardFooter>
           )}
-        </div>
+        </Card>
 
         {/* Company Quick Summary */}
-        <div className="bg-card/20 border border-border/40 rounded-2xl p-6 backdrop-blur-sm flex flex-col justify-between">
+        <Card className="flex flex-col justify-between">
           <div>
-            <h2 className="text-lg font-bold text-foreground mb-4">Company Profile</h2>
-            <div className="space-y-4 text-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-brand-600 dark:text-brand-400" />
+                Company Profile
+              </CardTitle>
+              <CardDescription>
+                Your public production credentials
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
               <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-                  Type
+                <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  Company Type
                 </p>
-                <p className="text-foreground capitalize mt-0.5">
-                  {profile.company_type?.replace("_", " ") || "Not set"}
-                </p>
+                <div className="mt-1">
+                  <Badge variant="secondary" className="capitalize font-medium">
+                    {profile.company_type?.replace("_", " ") || "Production House"}
+                  </Badge>
+                </div>
               </div>
 
               <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-                  Website
+                <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  Official Website
                 </p>
                 {profile.website ? (
                   <a
                     href={profile.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-brand-500 hover:underline mt-0.5 block truncate"
+                    className="inline-flex items-center gap-1.5 text-xs text-brand-600 dark:text-brand-400 hover:underline mt-1 break-all"
                   >
-                    {profile.website}
+                    <Globe className="h-3.5 w-3.5 shrink-0" />
+                    <span>{profile.website.replace(/^https?:\/\//, "")}</span>
+                    <ExternalLink className="h-3 w-3 shrink-0" />
                   </a>
                 ) : (
-                  <p className="text-muted-foreground mt-0.5">Not set</p>
+                  <p className="text-xs text-muted-foreground mt-1">Not configured</p>
                 )}
               </div>
 
               <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
-                  Bio
+                <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  About the Studio
                 </p>
-                <p className="text-foreground/90 mt-0.5 leading-relaxed line-clamp-4">
-                  {profile.bio || "No company bio provided yet."}
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-4">
+                  {profile.bio || "No company bio provided yet. Update your profile to present a professional impression to applicants."}
                 </p>
               </div>
-            </div>
+            </CardContent>
           </div>
 
-          <div className="pt-6 border-t border-border/40">
-            <Link href="/producer/profile">
-              <Button variant="outline" className="w-full font-semibold border-border/60">
-                Edit Profile
+          <CardFooter className="border-t border-border/40 pt-4">
+            <Link href="/producer/profile" className="w-full">
+              <Button variant="outline" className="w-full font-semibold border-border/70">
+                Edit Company Profile
               </Button>
             </Link>
-          </div>
-        </div>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   )

@@ -53,29 +53,29 @@ export function CastingFilterSidebar({ categories }: CastingFilterSidebarProps) 
   }
 
   return (
-    <div className="bg-card/45 backdrop-blur-md border border-border/40 p-5 rounded-2xl shadow-xl shadow-brand-500/5 space-y-5">
+    <div className="bg-card border border-border/50 p-5 rounded-xl shadow-xs space-y-4">
       <div className="flex items-center justify-between border-b border-border/40 pb-3">
-        <h3 className="font-bold text-foreground text-sm flex items-center gap-1.5">
+        <h3 className="font-heading font-bold text-foreground text-sm flex items-center gap-1.5">
           <Filter className="h-4 w-4 text-brand-500" /> Filters
         </h3>
         {(location || category || gender || compensation || deadline) && (
           <button
             onClick={handleClearFilters}
-            className="text-[10px] font-bold text-brand-500 hover:text-brand-600 cursor-pointer"
+            className="text-[11px] font-semibold text-brand-500 hover:text-brand-600 cursor-pointer"
           >
             Clear All
           </button>
         )}
       </div>
 
-      <div className="space-y-4 text-xs">
+      <div className="space-y-3.5 text-xs">
         {/* Location Search */}
         <div>
-          <label className="block font-semibold text-foreground uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
             Location
           </label>
           <div className="relative flex items-center">
-            <span className="absolute left-2.5 text-muted-foreground">
+            <span className="absolute left-2.5 text-muted-foreground/60 pointer-events-none">
               <MapPin className="h-3.5 w-3.5" />
             </span>
             <input
@@ -83,32 +83,23 @@ export function CastingFilterSidebar({ categories }: CastingFilterSidebarProps) 
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g. Karachi, Lahore..."
-              className="w-full h-9 pl-8 pr-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
+              className="w-full h-8.5 pl-8 pr-2.5 rounded-lg border border-border/70 bg-background text-foreground placeholder:text-muted-foreground/50 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-xs"
             />
           </div>
         </div>
 
         {/* Category */}
         <div>
-          <label className="block font-semibold text-foreground uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
             Category
           </label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full h-9 px-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
+            className="w-full h-8.5 px-2.5 rounded-lg border border-border/70 bg-background text-foreground focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-xs"
           >
             <option value="">All Categories</option>
-            {(categories && categories.length > 0
-              ? categories
-              : [
-                  { id: "cat-actor", name: "Actor / Actress", slug: "actor" },
-                  { id: "cat-model", name: "Model", slug: "model" },
-                  { id: "cat-singer", name: "Singer / Musician", slug: "singer" },
-                  { id: "cat-voice", name: "Voice Artist", slug: "voice-artist" },
-                  { id: "cat-dancer", name: "Dancer", slug: "dancer" },
-                ]
-            ).map((cat) => (
+            {categories.map((cat) => (
               <option key={cat.id} value={cat.slug}>
                 {cat.name}
               </option>
@@ -118,68 +109,72 @@ export function CastingFilterSidebar({ categories }: CastingFilterSidebarProps) 
 
         {/* Gender Preference */}
         <div>
-          <label className="block font-semibold text-foreground uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
             Gender Preference
           </label>
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-            className="w-full h-9 px-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
+            className="w-full h-8.5 px-2.5 rounded-lg border border-border/70 bg-background text-foreground focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-xs"
           >
             <option value="">Any Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="any">Shared / Any</option>
+            <option value="non-binary">Non-Binary / Any</option>
           </select>
         </div>
 
         {/* Compensation Type */}
         <div>
-          <label className="block font-semibold text-foreground uppercase tracking-wider mb-1.5">
-            Compensation Type
+          <label className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            Compensation
           </label>
           <select
             value={compensation}
             onChange={(e) => setCompensation(e.target.value)}
-            className="w-full h-9 px-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
+            className="w-full h-8.5 px-2.5 rounded-lg border border-border/70 bg-background text-foreground focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-xs"
           >
-            <option value="">Any Compensation</option>
-            <option value="paid">Paid Roles</option>
-            <option value="contra">Contra / Volunteer</option>
+            <option value="">All Types</option>
+            <option value="paid">Paid Only</option>
+            <option value="contra">Contra / Voluntary</option>
           </select>
         </div>
 
-        {/* Deadline */}
+        {/* Application Deadline */}
         <div>
-          <label className="block font-semibold text-foreground uppercase tracking-wider mb-1.5">
-            Application Deadline
+          <label className="block text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            Deadline
           </label>
           <select
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
-            className="w-full h-9 px-2 rounded-lg border border-input bg-background/50 text-foreground focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all text-xs"
+            className="w-full h-8.5 px-2.5 rounded-lg border border-border/70 bg-background text-foreground focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all text-xs"
           >
-            <option value="">All Deadlines</option>
+            <option value="">Any Deadline</option>
             <option value="today">Closing Today</option>
             <option value="week">Closing This Week</option>
             <option value="month">Closing This Month</option>
           </select>
         </div>
-      </div>
 
-      <Button
-        onClick={handleApplyFilters}
-        disabled={isPending}
-        className="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2 rounded-lg text-xs transition-all shadow-md shadow-brand-500/10 cursor-pointer"
-      >
-        {isPending ? (
-          <>
-            <Loader2 className="mr-1.5 h-3 w-3 animate-spin" /> Filtering...
-          </>
-        ) : (
-          "Apply Filters"
-        )}
-      </Button>
+        <Button
+          onClick={handleApplyFilters}
+          disabled={isPending}
+          className="w-full font-semibold text-xs h-8.5 rounded-lg shadow-xs cursor-pointer mt-2"
+        >
+          {isPending ? (
+            <>
+              <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
+              <span>Filtering...</span>
+            </>
+          ) : (
+            <>
+              <Search className="h-3.5 w-3.5 mr-1.5" />
+              <span>Apply Filters</span>
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   )
 }

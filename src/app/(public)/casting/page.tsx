@@ -14,6 +14,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  Film,
+  Mic,
+  Radio,
+  Music,
+  Layers,
 } from "lucide-react"
 
 // ISR configuration
@@ -189,18 +194,28 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
   const hasPrev = currentPage > 1
   const hasNext = currentPage < totalPages
 
+  const disciplineTabs = [
+    { label: "All Castings", slug: "", icon: Layers },
+    { label: "Actors", slug: "actor", icon: Film },
+    { label: "Models", slug: "model", icon: Sparkles },
+    { label: "Singers", slug: "singer", icon: Mic },
+    { label: "Voice Artists", slug: "voice-artist", icon: Radio },
+    { label: "Dancers", slug: "dancer", icon: Music },
+  ]
+
   return (
     <>
       <Navbar />
       <main className="flex-1 bg-background py-10 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 space-y-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           {/* Header Hero Section */}
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-xs font-bold">
-              <Sparkles className="h-3.5 w-3.5" /> Public Audition Board
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/25 text-brand-600 dark:text-brand-400 text-xs font-bold shadow-2xs">
+              <Sparkles className="h-3.5 w-3.5 text-brand-500" />
+              <span>Public Audition Board</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-extrabold font-heading text-foreground tracking-tight leading-tight">
-              Casting Calls & Auditions
+              Casting Calls &amp; Auditions
             </h1>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
               Find verified casting updates for dramas, commercials, films, fashion, and music videos. Open for everyone to browse — register as talent to apply.
@@ -209,17 +224,11 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
 
           {/* Quick Discipline Filter Bar */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {[
-              { label: "All Castings", slug: "", icon: "🌟" },
-              { label: "Actors", slug: "actor", icon: "🎭" },
-              { label: "Models", slug: "model", icon: "✨" },
-              { label: "Singers", slug: "singer", icon: "🎤" },
-              { label: "Voice Artists", slug: "voice-artist", icon: "🎙️" },
-              { label: "Dancers", slug: "dancer", icon: "💃" },
-            ].map((tab) => {
+            {disciplineTabs.map((tab) => {
+              const Icon = tab.icon
               const currentCategory = (resolvedSearchParams.category || "").toLowerCase()
               const isActive = (!tab.slug && !currentCategory) || (tab.slug && currentCategory === tab.slug)
-              
+
               const params = new URLSearchParams()
               if (resolvedSearchParams.location) params.set("location", resolvedSearchParams.location)
               if (tab.slug) params.set("category", tab.slug)
@@ -234,13 +243,13 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
                 <Link
                   key={tab.label}
                   href={href}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer ${
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border cursor-pointer ${
                     isActive
-                      ? "bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-500/20"
-                      : "bg-card/70 text-muted-foreground border-border/50 hover:border-brand-500/30 hover:text-foreground hover:bg-card"
+                      ? "bg-brand-500 text-white border-brand-500 shadow-sm"
+                      : "bg-card text-muted-foreground border-border/60 hover:border-brand-500/30 hover:text-foreground"
                   }`}
                 >
-                  <span className="text-sm">{tab.icon}</span>
+                  <Icon className="h-3.5 w-3.5" />
                   <span>{tab.label}</span>
                 </Link>
               )
@@ -363,16 +372,14 @@ export default async function PublicCastingCallsPage({ searchParams }: PageProps
                   })}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 bg-card border border-border/80 rounded-3xl shadow-sm">
-                  <div className="p-4 bg-brand-500/10 rounded-full text-brand-500">
-                    <Briefcase className="h-8 w-8" />
+                <div className="flex flex-col items-center justify-center py-16 px-6 text-center rounded-xl border border-border/50 bg-card/40 backdrop-blur-xs">
+                  <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-3.5 ring-4 ring-brand-500/5">
+                    <Briefcase className="h-6 w-6" />
                   </div>
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-foreground">No Open Casting Calls</h3>
-                    <p className="text-xs text-muted-foreground max-w-xs">
-                      We couldn't find any casting calls matching your active filters. Try clearing them.
-                    </p>
-                  </div>
+                  <h3 className="text-base font-semibold text-foreground font-heading">No Open Casting Calls</h3>
+                  <p className="text-xs text-muted-foreground max-w-sm mt-1 leading-relaxed">
+                    We couldn&apos;t find any open casting calls matching your active filters. Try clearing or expanding your search criteria.
+                  </p>
                 </div>
               )}
 

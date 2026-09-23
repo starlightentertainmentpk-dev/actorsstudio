@@ -307,7 +307,7 @@ export default function TalentApplicationsPage() {
                 steps[1].done = true
                 steps[2].done = true
                 steps[3].done = true
-                steps[3].label = "🎉 Selected!"
+                steps[3].label = "Selected for Role"
                 steps[3].date = updatedDateStr
               } else if (app.status === "rejected") {
                 steps[3].done = true

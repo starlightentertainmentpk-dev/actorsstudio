@@ -145,37 +145,37 @@ export function TalentFilterSidebar({ defaultValues, categories, onCloseMobile }
   }
 
   return (
-    <div className="flex flex-col gap-6 bg-card border border-border/60 rounded-3xl p-5 md:p-6 shadow-sm overflow-y-auto max-h-[calc(100vh-8rem)]">
-      <div className="flex items-center justify-between border-b border-border/40 pb-4">
-        <h2 className="font-heading font-bold text-lg text-foreground flex items-center gap-2">
+    <div className="flex flex-col gap-5 bg-card border border-border/50 rounded-xl p-5 shadow-xs overflow-y-auto max-h-[calc(100vh-7rem)]">
+      <div className="flex items-center justify-between border-b border-border/40 pb-3">
+        <h2 className="font-heading font-bold text-base text-foreground flex items-center gap-2">
           <SlidersHorizontal className="h-4 w-4 text-brand-500" /> Filters
         </h2>
         <Button 
           variant="ghost" 
           size="xs" 
           onClick={handleReset}
-          className="text-muted-foreground hover:text-brand-500 font-semibold flex items-center gap-1 cursor-pointer"
+          className="text-muted-foreground hover:text-brand-500 font-semibold flex items-center gap-1 cursor-pointer text-[11px]"
         >
           <RefreshCw className="h-3 w-3" /> Reset
         </Button>
       </div>
 
       {/* Text Search Box */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Search Keyword</label>
+      <div className="space-y-1.5">
+        <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Search Keyword</label>
         <div className="relative">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground/60" />
+          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-muted-foreground/60" />
           <input
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Name, skills, bio..."
-            className="w-full bg-muted/30 border border-border/60 rounded-xl pl-9 pr-4 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/30 outline-none transition-all"
+            className="w-full bg-background border border-border/70 rounded-lg pl-9 pr-8 py-1.5 text-xs text-foreground placeholder:text-muted-foreground/50 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all"
           />
           {searchText && (
             <button 
               onClick={() => { setSearchText(""); applyFilters({ qText: "" }) }} 
-              className="absolute right-3 top-3 text-muted-foreground hover:text-foreground cursor-pointer"
+              className="absolute right-2.5 top-2 text-muted-foreground hover:text-foreground cursor-pointer"
             >
               <X className="h-3.5 w-3.5" />
             </button>

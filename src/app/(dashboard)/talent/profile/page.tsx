@@ -378,14 +378,14 @@ export default function TalentProfilePage() {
       <div className="space-y-4 max-w-3xl">
         
         {/* Section 1: Personal Info */}
-        <div className="border border-border/40 bg-card/25 rounded-2xl overflow-hidden backdrop-blur-md">
+        <div className="border border-border/50 bg-card rounded-xl overflow-hidden shadow-xs">
           <button
             type="button"
             onClick={() => setOpenSection(openSection === "personal" ? "" : "personal")}
-            className="w-full flex items-center justify-between p-5 font-bold text-left text-foreground hover:bg-muted/30 transition-colors"
+            className="w-full flex items-center justify-between p-4 font-bold text-left text-foreground hover:bg-muted/30 transition-colors cursor-pointer"
           >
-            <span className="font-heading text-base text-foreground">1. Personal Information</span>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${openSection === "personal" ? "rotate-180" : ""}`} />
+            <span className="font-heading text-sm text-foreground">1. Personal Information</span>
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${openSection === "personal" ? "rotate-180" : ""}`} />
           </button>
           <AnimatePresence initial={false}>
             {openSection === "personal" && (
@@ -396,49 +396,49 @@ export default function TalentProfilePage() {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="p-5 border-t border-border/40 grid gap-4 sm:grid-cols-2">
+                <div className="p-4 border-t border-border/40 grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Full Name *</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Full Name *</label>
                     <input
                       type="text"
                       value={formData.full_name}
                       onChange={(e) => handleInputChange("full_name", e.target.value)}
                       onBlur={() => handleFieldSave("full_name", formData.full_name)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.full_name && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.full_name}</p>}
+                    {errors.full_name && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.full_name}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Stage Name</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Stage Name</label>
                     <input
                       type="text"
                       value={formData.stage_name}
                       onChange={(e) => handleInputChange("stage_name", e.target.value)}
                       onBlur={() => handleFieldSave("stage_name", formData.stage_name)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Date of Birth (YYYY-MM-DD)</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Date of Birth (YYYY-MM-DD)</label>
                     <input
                       type="text"
                       placeholder="YYYY-MM-DD"
                       value={formData.dob}
                       onChange={(e) => handleInputChange("dob", e.target.value)}
                       onBlur={() => handleFieldSave("dob", formData.dob)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.dob && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.dob}</p>}
+                    {errors.dob && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.dob}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Gender</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Gender</label>
                     <select
                       value={formData.gender}
                       onChange={(e) => {
                         handleInputChange("gender", e.target.value)
                         handleFieldSave("gender", e.target.value)
                       }}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     >
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
@@ -448,27 +448,27 @@ export default function TalentProfilePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">City *</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">City *</label>
                     <input
                       type="text"
                       value={formData.city}
                       onChange={(e) => handleInputChange("city", e.target.value)}
                       onBlur={() => handleFieldSave("city", formData.city)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.city && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.city}</p>}
+                    {errors.city && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.city}</p>}
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Phone Number</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Phone Number</label>
                     <input
                       type="text"
                       placeholder="e.g., 03001234567"
                       value={formData.phone}
                       onChange={(e) => handleInputChange("phone", e.target.value)}
                       onBlur={() => handleFieldSave("phone", formData.phone)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.phone && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.phone}</p>}
+                    {errors.phone && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.phone}</p>}
                   </div>
                 </div>
               </motion.div>
@@ -477,14 +477,14 @@ export default function TalentProfilePage() {
         </div>
 
         {/* Section 2: Professional Info */}
-        <div className="border border-border/40 bg-card/25 rounded-2xl overflow-hidden backdrop-blur-md">
+        <div className="border border-border/50 bg-card rounded-xl overflow-hidden shadow-xs">
           <button
             type="button"
             onClick={() => setOpenSection(openSection === "professional" ? "" : "professional")}
-            className="w-full flex items-center justify-between p-5 font-bold text-left text-foreground hover:bg-muted/30 transition-colors"
+            className="w-full flex items-center justify-between p-4 font-bold text-left text-foreground hover:bg-muted/30 transition-colors cursor-pointer"
           >
-            <span className="font-heading text-base text-foreground">2. Professional Details</span>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${openSection === "professional" ? "rotate-180" : ""}`} />
+            <span className="font-heading text-sm text-foreground">2. Professional Details</span>
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${openSection === "professional" ? "rotate-180" : ""}`} />
           </button>
           <AnimatePresence initial={false}>
             {openSection === "professional" && (
@@ -495,10 +495,10 @@ export default function TalentProfilePage() {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="p-5 border-t border-border/40 space-y-4">
+                <div className="p-4 border-t border-border/40 space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Primary Category</label>
+                      <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Primary Category</label>
                       <select
                         value={formData.category_id}
                         onChange={(e) => {
@@ -506,7 +506,7 @@ export default function TalentProfilePage() {
                           handleInputChange("sub_category_id", "") // Reset subcategory
                           handleFieldSave("category_id", e.target.value)
                         }}
-                        className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                        className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium"
                       >
                         <option value="">Select Category</option>
                         {parentCategories.map((c: any) => (
@@ -516,7 +516,7 @@ export default function TalentProfilePage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Sub Category</label>
+                      <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Sub Category</label>
                       <select
                         value={formData.sub_category_id}
                         onChange={(e) => {
@@ -524,7 +524,7 @@ export default function TalentProfilePage() {
                           handleFieldSave("sub_category_id", e.target.value)
                         }}
                         disabled={!formData.category_id}
-                        className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all disabled:opacity-50"
+                        className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all disabled:opacity-50 font-medium"
                       >
                         <option value="">Select Sub Category</option>
                         {subCategories.map((c: any) => (
@@ -534,60 +534,60 @@ export default function TalentProfilePage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Experience (Years)</label>
+                      <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Experience (Years)</label>
                       <input
                         type="number"
                         min="0"
                         value={formData.experience_years}
                         onChange={(e) => handleInputChange("experience_years", e.target.value)}
                         onBlur={() => handleFieldSave("experience_years", formData.experience_years)}
-                        className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                        className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Height (cm)</label>
+                        <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Height (cm)</label>
                         <input
                           type="number"
                           placeholder="cm"
                           value={formData.height_cm}
                           onChange={(e) => handleInputChange("height_cm", e.target.value)}
                           onBlur={() => handleFieldSave("height_cm", formData.height_cm)}
-                          className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                          className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                         />
-                        {errors.height_cm && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.height_cm}</p>}
+                        {errors.height_cm && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.height_cm}</p>}
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Weight (kg)</label>
+                        <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Weight (kg)</label>
                         <input
                           type="number"
                           placeholder="kg"
                           value={formData.weight_kg}
                           onChange={(e) => handleInputChange("weight_kg", e.target.value)}
                           onBlur={() => handleFieldSave("weight_kg", formData.weight_kg)}
-                          className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                          className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                         />
-                        {errors.weight_kg && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.weight_kg}</p>}
+                        {errors.weight_kg && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.weight_kg}</p>}
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Professional Biography</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Professional Biography</label>
                     <textarea
                       rows={3}
                       value={formData.bio}
                       onChange={(e) => handleInputChange("bio", e.target.value)}
                       onBlur={() => handleFieldSave("bio", formData.bio)}
-                      className="w-full p-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full p-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                       placeholder="Share a short bio summarizing your performance background, training, and casting preferences."
                     />
                   </div>
 
                   {/* Skills input */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Skills & Talents</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Skills & Talents</label>
                     <div className="flex gap-2 mb-3">
                       <input
                         type="text"
@@ -600,14 +600,14 @@ export default function TalentProfilePage() {
                             handleAddSkill()
                           }
                         }}
-                        className="flex-1 h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                        className="flex-1 h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                       />
                       <button
                         type="button"
                         onClick={handleAddSkill}
-                        className="bg-brand-500 hover:bg-brand-600 text-white p-2.5 rounded-xl transition-all cursor-pointer"
+                        className="bg-brand-500 hover:bg-brand-600 text-white px-3 h-9 rounded-lg transition-all cursor-pointer font-semibold text-xs flex items-center gap-1"
                       >
-                        <Plus className="h-5 w-5" />
+                        <Plus className="h-4 w-4" /> Add
                       </button>
                     </div>
 
@@ -615,7 +615,7 @@ export default function TalentProfilePage() {
                       {skills.map(skill => (
                         <span 
                           key={skill}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-brand-500/5 text-brand-600 dark:text-brand-400 border border-brand-500/10 rounded-lg text-xs font-semibold"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20 rounded-md text-xs font-semibold"
                         >
                           {skill}
                           <button 
@@ -655,7 +655,7 @@ export default function TalentProfilePage() {
 
                   {/* Languages select */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Languages Spoken *</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Languages Spoken *</label>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {LANGUAGES.map(lang => {
                         const isSelected = languages.includes(lang)
@@ -664,10 +664,10 @@ export default function TalentProfilePage() {
                             type="button"
                             key={lang}
                             onClick={() => handleLanguageToggle(lang)}
-                            className={`flex items-center justify-between px-3 py-2 rounded-xl border text-xs font-semibold text-left transition-all duration-150 cursor-pointer ${
+                            className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-semibold text-left transition-all duration-150 cursor-pointer ${
                               isSelected 
                                 ? "bg-brand-500/10 border-brand-500 text-brand-600 dark:text-brand-400" 
-                                : "bg-background/20 border-border/60 text-muted-foreground hover:text-foreground"
+                                : "bg-background border-border/60 text-muted-foreground hover:text-foreground"
                             }`}
                           >
                             {lang}
@@ -691,7 +691,7 @@ export default function TalentProfilePage() {
                         className="h-4 w-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500 accent-brand-500"
                       />
                       <div>
-                        <span className="text-sm font-semibold text-foreground">Available for Bookings</span>
+                        <span className="text-xs font-bold text-foreground">Available for Bookings</span>
                         <p className="text-[10px] text-muted-foreground">Show up in search results for active casting calls</p>
                       </div>
                     </label>
@@ -707,7 +707,7 @@ export default function TalentProfilePage() {
                         className="h-4 w-4 rounded border-gray-300 text-brand-500 focus:ring-brand-500 accent-brand-500"
                       />
                       <div>
-                        <span className="text-sm font-semibold text-foreground">Union Member</span>
+                        <span className="text-xs font-bold text-foreground">Union Member</span>
                         <p className="text-[10px] text-muted-foreground">Certified member of industry talent guilds</p>
                       </div>
                     </label>
@@ -719,14 +719,14 @@ export default function TalentProfilePage() {
         </div>
 
         {/* Section 3: Social Links */}
-        <div className="border border-border/40 bg-card/25 rounded-2xl overflow-hidden backdrop-blur-md">
+        <div className="border border-border/50 bg-card rounded-xl overflow-hidden shadow-xs">
           <button
             type="button"
             onClick={() => setOpenSection(openSection === "social" ? "" : "social")}
-            className="w-full flex items-center justify-between p-5 font-bold text-left text-foreground hover:bg-muted/30 transition-colors"
+            className="w-full flex items-center justify-between p-4 font-bold text-left text-foreground hover:bg-muted/30 transition-colors cursor-pointer"
           >
-            <span className="font-heading text-base text-foreground">3. Social Connections</span>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${openSection === "social" ? "rotate-180" : ""}`} />
+            <span className="font-heading text-sm text-foreground">3. Social Connections</span>
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${openSection === "social" ? "rotate-180" : ""}`} />
           </button>
           <AnimatePresence initial={false}>
             {openSection === "social" && (
@@ -737,22 +737,22 @@ export default function TalentProfilePage() {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="p-5 border-t border-border/40 grid gap-4 sm:grid-cols-2">
+                <div className="p-4 border-t border-border/40 grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><InstagramIcon className="h-3.5 w-3.5 text-brand-500" /> Instagram Link</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><InstagramIcon className="h-3.5 w-3.5 text-brand-500" /> Instagram Link</label>
                     <input
                       type="text"
                       placeholder="https://instagram.com/yourname"
                       value={formData.instagram}
                       onChange={(e) => handleInputChange("instagram", e.target.value)}
                       onBlur={() => handleFieldSave("instagram", formData.instagram)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.instagram && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.instagram}</p>}
+                    {errors.instagram && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.instagram}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                       <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-brand-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                       </svg>
@@ -764,48 +764,48 @@ export default function TalentProfilePage() {
                       value={formData.tiktok}
                       onChange={(e) => handleInputChange("tiktok", e.target.value)}
                       onBlur={() => handleFieldSave("tiktok", formData.tiktok)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.tiktok && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.tiktok}</p>}
+                    {errors.tiktok && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.tiktok}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><YoutubeIcon className="h-3.5 w-3.5 text-brand-500" /> YouTube Channel</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><YoutubeIcon className="h-3.5 w-3.5 text-brand-500" /> YouTube Channel</label>
                     <input
                       type="text"
                       placeholder="https://youtube.com/c/yourchannel"
                       value={formData.youtube}
                       onChange={(e) => handleInputChange("youtube", e.target.value)}
                       onBlur={() => handleFieldSave("youtube", formData.youtube)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.youtube && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.youtube}</p>}
+                    {errors.youtube && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.youtube}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><FacebookIcon className="h-3.5 w-3.5 text-brand-500" /> Facebook Profile</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><FacebookIcon className="h-3.5 w-3.5 text-brand-500" /> Facebook Profile</label>
                     <input
                       type="text"
                       placeholder="https://facebook.com/yourprofile"
                       value={formData.facebook}
                       onChange={(e) => handleInputChange("facebook", e.target.value)}
                       onBlur={() => handleFieldSave("facebook", formData.facebook)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.facebook && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.facebook}</p>}
+                    {errors.facebook && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.facebook}</p>}
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-brand-500" /> Website URL</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5 flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-brand-500" /> Website URL</label>
                     <input
                       type="text"
                       placeholder="https://yourwebsite.com"
                       value={formData.website}
                       onChange={(e) => handleInputChange("website", e.target.value)}
                       onBlur={() => handleFieldSave("website", formData.website)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
-                    {errors.website && <p className="text-xs text-destructive mt-1.5 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.website}</p>}
+                    {errors.website && <p className="text-xs text-destructive mt-1 flex items-center gap-1"><AlertCircle className="h-3.5 w-3.5" />{errors.website}</p>}
                   </div>
                 </div>
               </motion.div>
@@ -814,14 +814,14 @@ export default function TalentProfilePage() {
         </div>
 
         {/* Section 4: Measurements */}
-        <div className="border border-border/40 bg-card/25 rounded-2xl overflow-hidden backdrop-blur-md">
+        <div className="border border-border/50 bg-card rounded-xl overflow-hidden shadow-xs">
           <button
             type="button"
             onClick={() => setOpenSection(openSection === "measurements" ? "" : "measurements")}
-            className="w-full flex items-center justify-between p-5 font-bold text-left text-foreground hover:bg-muted/30 transition-colors"
+            className="w-full flex items-center justify-between p-4 font-bold text-left text-foreground hover:bg-muted/30 transition-colors cursor-pointer"
           >
-            <span className="font-heading text-base text-foreground">4. Body Measurements (Inches)</span>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${openSection === "measurements" ? "rotate-180" : ""}`} />
+            <span className="font-heading text-sm text-foreground">4. Body Measurements (Inches)</span>
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${openSection === "measurements" ? "rotate-180" : ""}`} />
           </button>
           <AnimatePresence initial={false}>
             {openSection === "measurements" && (
@@ -832,9 +832,9 @@ export default function TalentProfilePage() {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="p-5 border-t border-border/40 grid gap-4 grid-cols-3">
+                <div className="p-4 border-t border-border/40 grid gap-4 grid-cols-3">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">
                       {formData.gender === "female" ? "Bust" : "Chest"} (")
                     </label>
                     <input
@@ -856,31 +856,31 @@ export default function TalentProfilePage() {
                           handleFieldSave("chest", formData.chest)
                         }
                       }}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Waist (")</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Waist (")</label>
                     <input
                       type="number"
                       placeholder="e.g. 32"
                       value={formData.waist}
                       onChange={(e) => handleInputChange("waist", e.target.value)}
                       onBlur={() => handleFieldSave("waist", formData.waist)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Hips (")</label>
+                    <label className="block text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Hips (")</label>
                     <input
                       type="number"
                       placeholder="e.g. 40"
                       value={formData.hip}
                       onChange={(e) => handleInputChange("hip", e.target.value)}
                       onBlur={() => handleFieldSave("hip", formData.hip)}
-                      className="w-full h-10 px-3 rounded-xl border border-input bg-background/50 text-foreground text-sm focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+                      className="w-full h-9 px-3 rounded-lg border border-border/60 bg-background text-foreground text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
                     />
                   </div>
                 </div>

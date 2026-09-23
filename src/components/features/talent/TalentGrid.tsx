@@ -15,9 +15,9 @@ interface TalentGridProps {
 export function TalentGrid({ talent, mode = "public", isVerified = false, loading = false }: TalentGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="flex flex-col h-full bg-card border border-border/40 rounded-2xl overflow-hidden animate-pulse">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <div key={index} className="flex flex-col h-full bg-card border border-border/50 rounded-xl overflow-hidden animate-pulse">
             <div className="aspect-[3/4] w-full bg-muted" />
             <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
               <div className="space-y-2">
@@ -38,18 +38,16 @@ export function TalentGrid({ talent, mode = "public", isVerified = false, loadin
 
   if (talent.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 bg-card border border-border/40 rounded-3xl shadow-sm">
-        <div className="p-4 bg-brand-500/10 rounded-full text-brand-500">
-          <Users className="h-10 w-10" />
+      <div className="flex flex-col items-center justify-center py-16 px-6 text-center rounded-xl border border-border/50 bg-card/40 backdrop-blur-xs">
+        <div className="h-12 w-12 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center mb-3.5 ring-4 ring-brand-500/5">
+          <Users className="h-6 w-6" />
         </div>
-        <div className="space-y-1">
-          <h3 className="text-lg font-bold text-foreground">No Talent Found</h3>
-          <p className="text-sm text-muted-foreground max-w-sm px-4">
-            We couldn't find any approved talent matching your current filter selections. Try clearing some filters.
-          </p>
-        </div>
+        <h3 className="text-base font-semibold text-foreground font-heading">No Talent Found</h3>
+        <p className="text-xs text-muted-foreground max-w-sm mt-1 mb-5 leading-relaxed">
+          We couldn&apos;t find any approved talent matching your current filter selections. Try clearing or relaxing your filters.
+        </p>
         <Link href={mode === "producer" ? "/producer/talent-search" : "/talent"}>
-          <span className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold text-brand-500 border border-brand-500/20 hover:bg-brand-500/5 rounded-xl transition-all cursor-pointer">
+          <span className="inline-flex items-center justify-center px-3.5 py-1.5 text-xs font-semibold text-brand-600 dark:text-brand-400 border border-brand-500/30 hover:bg-brand-500/10 rounded-lg transition-all cursor-pointer">
             Clear Filters
           </span>
         </Link>
@@ -92,7 +90,7 @@ export function TalentGrid({ talent, mode = "public", isVerified = false, loadin
   })
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
       {mappedTalents.map((talentItem) => (
         <TalentProfileCard 
           key={talentItem.id} 
