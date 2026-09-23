@@ -20,7 +20,7 @@ export async function proxy(request: NextRequest) {
 
   const supabase = createServerClient(
     sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL),
-    sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+    sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.ANON_Key || process.env.ANON_KEY),
     {
       cookies: {
         getAll: () => request.cookies.getAll(),

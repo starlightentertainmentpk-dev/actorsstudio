@@ -7,5 +7,5 @@ function sanitizeEnv(val?: string): string {
 
 export const adminClient = createClient<Database>(
   sanitizeEnv(process.env.NEXT_PUBLIC_SUPABASE_URL),
-  sanitizeEnv(process.env.SUPABASE_SERVICE_ROLE_KEY)
+  sanitizeEnv(process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.Service_role_key || process.env.SERVICE_ROLE_KEY)
 )
