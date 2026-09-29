@@ -7,14 +7,17 @@ import { ThemeToggle } from "./ThemeToggle"
 import { Button } from "@/components/ui/button"
 import { Avatar } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Bell, LogOut, Menu } from "lucide-react"
+import { Bell, LogOut, Menu, Search, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { useUser } from "@/hooks/useUser"
 
+import { OrganizationSwitcher } from "./OrganizationSwitcher"
+import { CommandPalette } from "./CommandPalette"
+
 interface DashboardShellProps {
-  role: "talent" | "producer" | "admin"
+  role: "talent" | "producer" | "admin" | "agency" | "client"
   children: ReactNode
 }
 
@@ -55,8 +58,11 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
               <Menu className="h-5 w-5" />
             </Button>
 
+            {/* Organization Switcher */}
+            <OrganizationSwitcher />
+
             {/* Breadcrumb / Title Context */}
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-muted text-foreground/80 capitalize">
                 {role}
               </span>
@@ -69,6 +75,23 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
 
           {/* Header Action Items */}
           <div className="flex items-center gap-2.5">
+            {/* Quick Command / AI Copilot Trigger */}
+            <button
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("open-command-palette"))
+                }
+              }}
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/60 bg-muted/30 hover:bg-muted/60 text-muted-foreground hover:text-foreground text-xs transition-colors"
+              title="Search agency commands or ask AI (Cmd+K)"
+            >
+              <Search className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="text-[11px]">Commands or ask AI...</span>
+              <kbd className="text-[10px] font-mono bg-background px-1.5 py-0.5 rounded-sm border border-border/70 text-muted-foreground">
+                ⌘K
+              </kbd>
+            </button>
+
             <ThemeToggle />
 
             {/* Notification Bell */}
@@ -97,6 +120,8 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
                     ? "Artist Account"
                     : role === "producer"
                     ? "Producer Account"
+                    : role === "agency"
+                    ? "Agency Agent"
                     : "Studio Admin"}
                 </p>
                 <p className="text-[10px] text-muted-foreground leading-none mt-1 truncate max-w-[140px]">
@@ -122,6 +147,9 @@ export function DashboardShell({ role, children }: DashboardShellProps) {
           </div>
         </main>
       </div>
+
+      {/* Global Command Palette (Cmd+K / Ctrl+K) */}
+      <CommandPalette />
     </div>
   )
 }

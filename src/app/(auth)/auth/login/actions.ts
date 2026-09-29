@@ -59,6 +59,7 @@ export async function loginWithEmail(formData: {
       agent_manager: "/agent/dashboard",
       producer_brand: "/producer/dashboard",
       casting_director: "/casting/dashboard",
+      client: "/client/dashboard",
     }
 
     return {

@@ -24,9 +24,18 @@ import {
   Sparkles,
   X,
   FileCheck,
+  Building2,
+  Video,
+  Handshake,
+  Bookmark,
+  FileSignature,
+  FolderOpen,
+  Receipt,
+  Wallet,
 } from "lucide-react"
+import { useOrganizations } from "@/hooks/useOrganizations"
 
-type SidebarRole = "talent" | "producer" | "admin"
+type SidebarRole = "talent" | "producer" | "admin" | "agency" | "client"
 
 interface SidebarProps {
   role: SidebarRole
@@ -38,6 +47,10 @@ interface SidebarProps {
 export function Sidebar({ role, className, isMobileOpen = false, onMobileClose }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pathname = usePathname()
+  const { activeOrg } = useOrganizations()
+
+  const brandName = activeOrg?.name || "Actor's Studio"
+  const brandColor = activeOrg?.brand_color || "#4f46e5"
 
   // Navigation configurations
   const menus = {
@@ -47,7 +60,10 @@ export function Sidebar({ role, className, isMobileOpen = false, onMobileClose }
       { label: "Media Library", href: "/talent/media", icon: ImageIcon },
       { label: "Jobs & Castings", href: "/talent/casting", icon: Briefcase },
       { label: "Applications", href: "/talent/applications", icon: FileCheck },
+      { label: "Self-Tapes", href: "/talent/self-tapes", icon: Video },
       { label: "Auditions", href: "/talent/auditions", icon: Calendar },
+      { label: "My Availability", href: "/talent/availability", icon: Bookmark },
+      { label: "Earnings & Payouts", href: "/talent/earnings", icon: Wallet },
       { label: "Settings", href: "/talent/settings", icon: Settings },
     ],
     producer: [
@@ -68,9 +84,29 @@ export function Sidebar({ role, className, isMobileOpen = false, onMobileClose }
       { label: "Talent Queue", href: "/admin/talent", icon: UserCheck },
       { label: "Analytics", href: "/admin/analytics", icon: BarChart },
     ],
+    agency: [
+      { label: "Dashboard", href: "/agency/dashboard", icon: LayoutDashboard },
+      { label: "Talent Roster", href: "/agency/talent", icon: Users },
+      { label: "Client Accounts", href: "/agency/clients", icon: Building2 },
+      { label: "Casting Pipeline", href: "/agency/casting", icon: Tv },
+      { label: "Commercial Deals", href: "/agency/deals", icon: Handshake },
+      { label: "Hold Priority", href: "/agency/holds", icon: Bookmark },
+      { label: "Smart Calendar", href: "/agency/calendar", icon: Calendar },
+      { label: "Contracts & Sign", href: "/agency/contracts", icon: FileSignature },
+      { label: "Document Vault", href: "/agency/documents", icon: FolderOpen },
+      { label: "Finance & Invoices", href: "/agency/finance", icon: Receipt },
+      { label: "Agency Settings", href: "/agency/settings", icon: Settings },
+    ],
+    client: [
+      { label: "Dashboard", href: "/client/dashboard", icon: LayoutDashboard },
+      { label: "Casting Reviews", href: "/client/projects", icon: Tv },
+      { label: "Submit Brief", href: "/client/briefs/new", icon: Sparkles },
+      { label: "My Briefs", href: "/client/briefs", icon: Briefcase },
+      { label: "Invoices", href: "/client/invoices", icon: FileCheck },
+    ],
   }
 
-  const currentMenu = menus[role]
+  const currentMenu = menus[role] || menus.agency
 
   const navContent = (
     <div className="flex flex-col h-full justify-between">
@@ -79,14 +115,26 @@ export function Sidebar({ role, className, isMobileOpen = false, onMobileClose }
         <div className="flex h-16 items-center justify-between px-4 border-b border-border/50">
           <Link
             href="/"
-            className="flex items-center gap-2 group cursor-pointer overflow-hidden"
+            className="flex items-center gap-2 group cursor-pointer overflow-hidden min-w-0"
           >
-            <div className="h-8 w-8 shrink-0 rounded-lg bg-gradient-to-br from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-xs">
-              <Sparkles className="h-4 w-4" />
+            <div
+              className="h-8 w-8 shrink-0 rounded-lg flex items-center justify-center text-white shadow-xs font-bold text-xs"
+              style={{ backgroundColor: brandColor }}
+            >
+              {activeOrg?.logo_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={activeOrg.logo_url}
+                  alt=""
+                  className="h-full w-full object-cover rounded-lg"
+                />
+              ) : (
+                <Sparkles className="h-4 w-4" />
+              )}
             </div>
             {!isCollapsed && (
-              <span className="font-heading font-bold text-base text-foreground tracking-tight transition-opacity duration-200">
-                Studio Space
+              <span className="font-heading font-bold text-sm text-foreground tracking-tight transition-opacity duration-200 truncate">
+                {brandName}
               </span>
             )}
           </Link>
@@ -165,15 +213,22 @@ export function Sidebar({ role, className, isMobileOpen = false, onMobileClose }
       <div className="p-3 border-t border-border/50 text-xs text-muted-foreground truncate">
         {!isCollapsed ? (
           <div className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-foreground text-[11px]">Actor&apos;s Studio</p>
-              <p className="text-[10px] text-muted-foreground">Pakistan • SaaS v1.0</p>
+            <div className="min-w-0 pr-2">
+              <p className="font-semibold text-foreground text-[11px] truncate">{brandName}</p>
+              <p className="text-[10px] text-muted-foreground truncate">
+                {activeOrg?.country || "Pakistan"} • {activeOrg?.currency || "PKR"}
+              </p>
             </div>
-            <div className="h-2 w-2 rounded-full bg-emerald-500" title="Online" />
+            <div className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" title="Online" />
           </div>
         ) : (
           <div className="flex justify-center">
-            <span className="text-[10px] font-bold text-brand-500">AS</span>
+            <span
+              className="text-[10px] font-bold"
+              style={{ color: brandColor }}
+            >
+              {brandName.substring(0, 2).toUpperCase()}
+            </span>
           </div>
         )}
       </div>

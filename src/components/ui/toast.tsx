@@ -13,9 +13,17 @@ export interface ToastItem {
   type?: ToastType
 }
 
+export interface ToastOptions {
+  title: string
+  description?: string
+  type?: ToastType
+  variant?: "default" | "destructive" | "success" | "warning" | "info"
+  duration?: number
+}
+
 interface ToastContextType {
   toasts: ToastItem[]
-  toast: (options: { title: string; description?: string; type?: ToastType; duration?: number }) => void
+  toast: (options: ToastOptions) => void
   dismiss: (id: string) => void
 }
 
@@ -32,16 +40,18 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     ({
       title,
       description,
-      type = "info",
+      type,
+      variant,
       duration = 4000,
-    }: {
-      title: string
-      description?: string
-      type?: ToastType
-      duration?: number
-    }) => {
+    }: ToastOptions) => {
+      let resolvedType: ToastType = type || "info"
+      if (variant === "destructive") resolvedType = "error"
+      else if (variant === "success") resolvedType = "success"
+      else if (variant === "warning") resolvedType = "warning"
+      else if (variant === "info" || variant === "default") resolvedType = "info"
+
       const id = Math.random().toString(36).substring(2, 9)
-      const newItem: ToastItem = { id, title, description, type }
+      const newItem: ToastItem = { id, title, description, type: resolvedType }
       setToasts((prev) => [...prev, newItem])
 
       if (duration > 0) {

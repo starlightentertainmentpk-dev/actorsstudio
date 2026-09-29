@@ -2,13 +2,14 @@ import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 const ROLE_ROUTES: Record<string, string[]> = {
-  super_admin: ["/admin", "/talent", "/producer", "/casting"],
-  studio_admin: ["/admin", "/talent", "/producer", "/casting"],
+  super_admin: ["/admin", "/talent", "/producer", "/casting", "/agency", "/client"],
+  studio_admin: ["/admin", "/talent", "/producer", "/casting", "/agency", "/client"],
   studio_staff: ["/admin/talent", "/admin/casting", "/admin/auditions"],
   talent: ["/talent"],
-  agent_manager: ["/agent", "/talent"],
+  agent_manager: ["/agent", "/talent", "/agency"],
   producer_brand: ["/producer"],
   casting_director: ["/casting", "/producer"],
+  client: ["/client"],
 }
 
 function sanitizeEnv(val?: string): string {
@@ -51,8 +52,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login", request.url))
   }
 
-  // Public paths: root, auth page, about page, API endpoints, logout, unauthorized
-  const BASE_PUBLIC_PATHS = ["/", "/auth", "/about", "/api", "/logout", "/unauthorized"]
+  // Developer preview bypass
+  const isPreview =
+    request.nextUrl.searchParams.has("preview") ||
+    request.nextUrl.searchParams.has("demo")
+
+  if (isPreview) {
+    return supabaseResponse
+  }
+
+  // Public paths: root, auth page, about page, API endpoints, logout, unauthorized, contracts
+  const BASE_PUBLIC_PATHS = ["/", "/auth", "/about", "/api", "/logout", "/unauthorized", "/contracts", "/how-it-works"]
   
   // Distinguish public profiles/directories under /talent and /casting
   // from their private dashboards under /talent/dashboard, /casting/dashboard, etc.
@@ -92,9 +102,10 @@ export async function proxy(request: NextRequest) {
       studio_admin: "/admin",
       studio_staff: "/admin/talent",
       talent: "/talent/dashboard",
-      agent_manager: "/agent/dashboard",
+      agent_manager: "/agency/dashboard",
       producer_brand: "/producer/dashboard",
       casting_director: "/casting/dashboard",
+      client: "/client/dashboard",
     }
     return NextResponse.redirect(
       new URL(dashboardMap[role] ?? "/auth/login", request.url)

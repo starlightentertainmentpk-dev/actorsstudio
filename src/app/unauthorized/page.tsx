@@ -16,6 +16,7 @@ export default function UnauthorizedPage() {
     agent_manager: "/agent/dashboard",
     producer_brand: "/producer/dashboard",
     casting_director: "/casting/dashboard",
+    client: "/client/dashboard",
   }
 
   const destination = user ? (dashboardMap[user.role] ?? "/talent/dashboard") : "/auth/login"
